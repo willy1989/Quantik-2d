@@ -32,9 +32,15 @@ public class Grid
         }
     }
 
-    public void AddElement(GridElement element, int x, int y)
+    public void AddElement(GridElement elementToAdd, int x, int y)
     {
-        
+        // Check grid coordinates validity
+
+        // Check whether there already is a element at the specified coordinates
+
+        // Check whether the elementToAdd is null
+
+        gridElements[GridCoordinateIndex(x, y)] = elementToAdd;
     }
 
     public bool AreGridCoordinatesValid(int x, int y)
@@ -54,8 +60,13 @@ public class Grid
             throw new ArgumentException("The x and y coordinates you specified are beyond the scope of the grid.");
         }
 
-        GridElement result = gridElements[width * y + x];
+        GridElement result = gridElements[GridCoordinateIndex(x, y)];
 
         return result;
+    }
+
+    protected int GridCoordinateIndex(int x, int y)
+    {
+        return width * y + x;
     }
 }

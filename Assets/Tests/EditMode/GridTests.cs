@@ -7,24 +7,43 @@ using UnityEngine.TestTools;
 
 public class GridTests
 {
-    public static Grid_TestHelper CreatePopulatedGrid(int width, int height, int elementsQuantity)
+    public static Grid_TestHelper CreatePopulatedGrid(int width, int height)
     {
         Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
-        GridElement[] gridElements = CreateGridElements(quantity: elementsQuantity);
+        GridElement[] gridElements = CreateGridElements(quantity: width * height, elementsAreEmpty: false);
 
         grid_TestHelper.PopulateGrid(gridElements);
 
         return grid_TestHelper;
     }
 
-    public static GridElement[] CreateGridElements(int quantity)
+    public static Grid_TestHelper CreateEmptyGrid(int width, int height)
+    {
+        Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
+
+        GridElement[] gridElements = CreateGridElements(quantity: width * height, elementsAreEmpty: true);
+
+        grid_TestHelper.PopulateGrid(gridElements);
+
+        return grid_TestHelper;
+    }
+
+    public static GridElement[] CreateGridElements(int quantity, bool elementsAreEmpty)
     {
         GridElement[] result = new GridElement[quantity];
 
         for (int i = 0; i < quantity; i++)
         {
-            result[i] = new GridElement();
+            if(elementsAreEmpty == false)
+            {
+                result[i] = new GridElement();
+            }
+
+            else
+            {
+                result[i] = null;
+            }
         }
 
         return result;
@@ -74,7 +93,7 @@ public class GridTests
         {
             // Arrange
 
-            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height, elementsQuantity: width * height);
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height);
 
 
             // Assert
@@ -110,7 +129,7 @@ public class GridTests
 
             Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
-            GridElement[] gridElements = CreateGridElements(quantity: elementsQuantity);
+            GridElement[] gridElements = CreateGridElements(quantity: elementsQuantity, elementsAreEmpty: false);
 
             // Assert
 
@@ -139,7 +158,7 @@ public class GridTests
         {
             // Arrange
 
-            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height, elementsQuantity: width * height);
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height);
 
 
             // Assert
@@ -172,7 +191,7 @@ public class GridTests
         {
             // Arrange
 
-            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height, elementsQuantity: width * height);
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height);
 
             // Assert
 
@@ -207,7 +226,7 @@ public class GridTests
         {
             // Arrange
 
-            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height, elementsQuantity: width * height);
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height);
 
 
             // Assert
@@ -244,6 +263,74 @@ public class GridTests
         public void GridCoordinate_Minus_1_Minus_1_On_2_By_2_Grid_Return_False()
         {
             GridCoordinates_X_Y_Return_True_False(width: 2, height: 2, x: -1, y: -1, expectedValue: false);
+        }
+    }
+
+    // To do: check for exceptions
+    public class AddElement
+    {
+        private void GridCoordinates_X_Y_Grid_Cell_Empty_Successfully_Add_Element(int width, int height, int x, int y, int expectedElementGridIndex)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = CreateEmptyGrid(width, height);
+
+            GridElement addedGridElement = new GridElement();
+
+            grid_TestHelper.AddElement(addedGridElement, x, y);
+
+            // Assert
+
+            GridElement expectedValue = addedGridElement;
+            GridElement actualValue = grid_TestHelper.GridElements[expectedElementGridIndex];
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [Test]
+        public void GridCoordinates_0_0_On_2_By_2_Grid_Grid_Cell_Empty_Successfully_Add_Element()
+        {
+            GridCoordinates_X_Y_Grid_Cell_Empty_Successfully_Add_Element(width: 2, height: 2, x: 0, y: 0, expectedElementGridIndex: 0);
+        }
+
+        [Test]
+        public void GridCoordinates_1_1_On_2_By_2_Grid_Grid_Cell_Empty_Successfully_Add_Element()
+        {
+            GridCoordinates_X_Y_Grid_Cell_Empty_Successfully_Add_Element(width: 2, height: 2, x: 1, y: 1, expectedElementGridIndex: 3);
+        }
+    }
+
+    public class GridCoordinateIndex
+    {
+        private void GridCoordinates_X_Y_Return_Z(int width, int height, int x, int y, int expectedGridCoordinateIndex)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = CreateEmptyGrid(width, height);
+
+
+            // Assert
+
+            int actualValue = grid_TestHelper.GridCoordinateIndex_UnitTest(x, y);
+
+            Assert.AreEqual(expectedGridCoordinateIndex, actualValue);
+        }
+
+        [Test] public void GridCoordinates_0_0_On_2_By_2_Grid_Return_0()
+        {
+            GridCoordinates_X_Y_Return_Z(width: 2, height:2, x: 0, y: 0, expectedGridCoordinateIndex: 0);
+        }
+
+        [Test]
+        public void GridCoordinates_2_2_On_3_By_3_Grid_Return_9()
+        {
+            GridCoordinates_X_Y_Return_Z(width: 3, height: 3, x: 2, y: 2, expectedGridCoordinateIndex: 8);
+        }
+
+        [Test]
+        public void GridCoordinates_4_4_On_1_By_3_Grid_Return_13()
+        {
+            GridCoordinates_X_Y_Return_Z(width: 4, height: 4, x: 1, y: 3, expectedGridCoordinateIndex: 13);
         }
     }
 }
