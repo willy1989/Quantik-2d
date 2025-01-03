@@ -7,9 +7,9 @@ using UnityEngine.TestTools;
 
 public class GridTests
 {
-    public static Grid_TestHelper CreatePopulatedGrid(int width, int height, GridCoordinateValidator gridCoordinateValidator)
+    public static Grid_TestHelper CreatePopulatedGrid(int width, int height)
     {
-        Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height, gridCoordinateValidator);
+        Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
         GridElement[] gridElements = CreateGridElements(quantity: width * height, elementsAreEmpty: false);
 
@@ -20,9 +20,7 @@ public class GridTests
 
     public static Grid_TestHelper CreateEmptyGrid(int width, int height)
     {
-        RealGridCoordinateValidator realGridCoordinateValidator = new RealGridCoordinateValidator();
-
-        Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height, realGridCoordinateValidator);
+        Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
         GridElement[] gridElements = CreateGridElements(quantity: width * height, elementsAreEmpty: true);
 
@@ -57,9 +55,7 @@ public class GridTests
         {
             // Arrange
 
-            RealGridCoordinateValidator realGridCoordinateValidator = new RealGridCoordinateValidator();
-
-            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height, realGridCoordinateValidator);
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
 
             // Assert
@@ -96,8 +92,7 @@ public class GridTests
         private void PopulateGrid_Pass_X_Elements_Grid_Has_X_Elements(int width, int height, int elementsQuantity)
         {
             // Arrange
-            RealGridCoordinateValidator realGridCoordinateValidator = new RealGridCoordinateValidator();
-            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height, realGridCoordinateValidator);
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width, height);
 
 
             // Assert
@@ -130,9 +125,8 @@ public class GridTests
         private void PopulateGrid_Pass_X_Elements_Does_Not_Match_Set_Elements_Quantity_Throw_Argument_Error(int width, int height, int elementsQuantity)
         {
             // Arrange
-            RealGridCoordinateValidator realGridCoordinateValidator = new RealGridCoordinateValidator();
 
-            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height, realGridCoordinateValidator);
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
             GridElement[] gridElements = CreateGridElements(quantity: elementsQuantity, elementsAreEmpty: false);
 
@@ -165,8 +159,8 @@ public class GridTests
 
             FakeGridCoordinateValidator fakeGridCoordinateValidator = new FakeGridCoordinateValidator();
 
-            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height, fakeGridCoordinateValidator);
-
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
+            grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
 
             // Assert
 
@@ -198,9 +192,7 @@ public class GridTests
         {
             // Arrange
 
-            RealGridCoordinateValidator realGridCoordinateValidator = new RealGridCoordinateValidator();
-
-            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height, realGridCoordinateValidator);
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
             // Assert
 

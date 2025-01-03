@@ -7,19 +7,30 @@ public class Grid
 {
     protected GridElement[] gridElements;
 
-    private GridCoordinateValidator gridCoordinateValidator;
+    private GridCoordinateValidator gridCoordinateValidator = new RealGridCoordinateValidator();
+
+    public GridCoordinateValidator GridCoordinateValidator
+    {
+        get
+        {
+            return gridCoordinateValidator;
+        }
+
+        set
+        {
+            gridCoordinateValidator = value;
+        }
+    }
 
     protected int width { get; private set; }
     protected int height { get; private set; }
 
-    public Grid(int width, int height, GridCoordinateValidator gridCoordinateValidator)
+    public Grid(int width, int height)
     {
         this.width = width;
         this.height = height;
 
         gridElements = new GridElement[width * height];
-
-        this.gridCoordinateValidator = gridCoordinateValidator;
     }
 
     public void PopulateGrid(GridElement[] newElements)
