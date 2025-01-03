@@ -14,7 +14,7 @@ public class Grid_TestHelper : Grid
         return GridCoordinateIndex(x, y);
     }
 
-    public Grid_TestHelper(int width, int height) : base(width, height)
+    public Grid_TestHelper(int width, int height, GridCoordinateValidator gridCoordinateValidator) : base(width, height, gridCoordinateValidator)
     {
     }
 }
