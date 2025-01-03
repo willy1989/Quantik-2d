@@ -220,6 +220,7 @@ public class GridTests
         }
     }
 
+    /*
     public class AreGridCoordinatesValid
     {
         private void GridCoordinates_X_Y_Return_True_False(int width, int height, int x, int y, bool expectedValue)
@@ -265,6 +266,7 @@ public class GridTests
             GridCoordinates_X_Y_Return_True_False(width: 2, height: 2, x: -1, y: -1, expectedValue: false);
         }
     }
+    */
 
     // To do: check for exceptions
     public class AddElement

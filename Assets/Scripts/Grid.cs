@@ -7,6 +7,8 @@ public class Grid
 {
     protected GridElement[] gridElements;
 
+    private GridCoordinateValidator gridCoordinateValidator = new RealGridCoordinateValidator();
+
     protected int width { get; private set; }
     protected int height { get; private set; }
 
@@ -43,19 +45,9 @@ public class Grid
         gridElements[GridCoordinateIndex(x, y)] = elementToAdd;
     }
 
-    public bool AreGridCoordinatesValid(int x, int y)
-    {
-        if (x < 0 || x > width - 1 || y < 0 || y > height - 1)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     public GridElement GetElementFromGrid(int x, int y)
     {
-        if(AreGridCoordinatesValid(x, y) == false)
+        if(gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
         {
             throw new ArgumentException("The x and y coordinates you specified are beyond the scope of the grid.");
         }
