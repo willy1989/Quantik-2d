@@ -83,6 +83,33 @@ public class Grid
         return element == null;
     }
 
+    private bool CanPlaceElementAtCoordinates(GridElement element, int x, int y)
+    {
+        // Based on the element's coordinates, check:
+        // row
+        // column
+        // corner
+
+        return true;
+    }
+
+    public GridElement[] GetRowFromCoordinatesOfGridElement(int x, int y)
+    {
+        if(gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
+        {
+            throw new ArgumentException("The coordinates you input are out of the grid.");
+        }
+
+        GridElement[] result = new GridElement[4];
+
+        for(int i = 0; i < 4; i++)
+        {
+            result[i] = GetElementFromGrid(i, y);
+        }
+
+        return result;
+    }
+
     protected int GridCoordinateIndex(int x, int y)
     {
         return width * y + x;

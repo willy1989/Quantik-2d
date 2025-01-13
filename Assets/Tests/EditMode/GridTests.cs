@@ -222,7 +222,6 @@ public class GridTests
         }
     }
 
-    // To do: check for exceptions
     public class AddElement
     {
         private void GridCoordinates_X_Y_Grid_Cell_Empty_Successfully_Add_Element(int width, int height, int x, int y, int expectedElementGridIndex)
@@ -326,6 +325,72 @@ public class GridTests
         public void GridCoordinates_4_4_On_1_By_3_Grid_Return_13()
         {
             GridCoordinates_X_Y_Return_Z(width: 4, height: 4, x: 1, y: 3, expectedGridCoordinateIndex: 13);
+        }
+    }
+
+    public class GetRowFromCoordinatesOfGridElement
+    {
+        private void GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Row(int x, int y, int rowIndex)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(4, 4);
+
+
+            // Assert
+
+            GridElement[] expectedValue = new GridElement[4];
+
+            for(int i = 0; i < 4; i++)
+            {
+                expectedValue[i] = grid_TestHelper.GridElements[grid_TestHelper.Width * y + i];
+            }
+
+            GridElement[] actualValue = grid_TestHelper.GetRowFromCoordinatesOfGridElement(x, y);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+
+        [Test]
+        public void GridCoordinates_0_0_Grid_4_By_4_Return_Bottom_Row()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Row(x: 0, y: 0, 0);
+        }
+
+        [Test]
+        public void GridCoordinates_1_0_Grid_4_By_4_Return_Bottom_Row()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Row(x: 1, y: 0, 0);
+        }
+
+        [Test]
+        public void GridCoordinates_1_1_Grid_4_By_4_Return_Second_Row_From_Bottom()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Row(x: 1, y: 1, 1);
+        }
+
+        [Test]
+        public void GridCoordinates_0_3_Grid_4_By_4_Return_First_Row_From_Top()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Row(x: 0, y: 3, 3);
+        }
+
+        [Test]
+        public void GridCoordinates_Are_Not_Valid_Throw_Argument_Exception()
+        {
+            // Arrange
+
+            FakeGridCoordinateValidator fakeGridCoordinateValidator = new FakeGridCoordinateValidator();
+            fakeGridCoordinateValidator.GridCoordinatesAreValid = false;
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(4, 4);
+            grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                grid_TestHelper.GetRowFromCoordinatesOfGridElement(0, 0);
+            });
         }
     }
 }
