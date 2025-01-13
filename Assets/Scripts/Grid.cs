@@ -86,7 +86,6 @@ public class Grid
     private bool CanPlaceElementAtCoordinates(GridElement element, int x, int y)
     {
         // Based on the element's coordinates, check:
-        // row
         // column
         // corner
 
@@ -105,6 +104,23 @@ public class Grid
         for(int i = 0; i < 4; i++)
         {
             result[i] = GetElementFromGrid(i, y);
+        }
+
+        return result;
+    }
+
+    public GridElement[] GetColumnFromCoordinatesOfGridElement(int x, int y)
+    {
+        if (gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
+        {
+            throw new ArgumentException("The coordinates you input are out of the grid.");
+        }
+
+        GridElement[] result = new GridElement[height];
+
+        for (int i = 0; i < height; i++)
+        {
+            result[i] = GetElementFromGrid(x, i);
         }
 
         return result;

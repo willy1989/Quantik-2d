@@ -393,4 +393,71 @@ public class GridTests
             });
         }
     }
+
+    public class GetColumnFromCoordinatesOfGridElement
+    {
+        private void GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Column(int gridWidth, int gridHeight, int x, int y, int columnIndex)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(gridWidth, gridHeight);
+
+
+            // Assert
+
+            GridElement[] expectedValue = new GridElement[gridHeight];
+
+            for (int i = 0; i < gridHeight; i++)
+            {
+                expectedValue[i] = grid_TestHelper.GridElements[grid_TestHelper.Width * i + x];
+            }
+
+            GridElement[] actualValue = grid_TestHelper.GetColumnFromCoordinatesOfGridElement(x, y);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+
+        [Test]
+        public void GridCoordinates_0_0_Grid_4_By_4_Return_First_Column_From_Left()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Column(gridWidth: 4, gridHeight:4, x: 0, y: 0, columnIndex: 0);
+        }
+
+        [Test]
+        public void GridCoordinates_0_3_Grid_4_By_4_Return_First_Column_From_Left()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Column(gridWidth: 4, gridHeight: 4, x: 0, y: 3, columnIndex: 0);
+        }
+
+        [Test]
+        public void GridCoordinates_2_2_Grid_4_By_4_Return_Third_Column_From_Left()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Column(gridWidth: 4, gridHeight: 4, x: 2, y: 2, columnIndex: 2);
+        }
+
+        [Test]
+        public void GridCoordinates_1_1_Grid_2_By_2_Return_Second_Column_From_Left()
+        {
+            GridCoordinates_X_Y_Grid_4_By_4_Return_Z_Column(gridWidth: 2, gridHeight: 2, x: 1, y: 1, columnIndex: 1);
+        }
+
+
+        [Test]
+        public void GridCoordinates_Are_Not_Valid_Throw_Argument_Exception()
+        {
+            // Arrange
+
+            FakeGridCoordinateValidator fakeGridCoordinateValidator = new FakeGridCoordinateValidator();
+            fakeGridCoordinateValidator.GridCoordinatesAreValid = false;
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(4, 4);
+            grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                grid_TestHelper.GetColumnFromCoordinatesOfGridElement(0, 0);
+            });
+        }
+    }
 }
