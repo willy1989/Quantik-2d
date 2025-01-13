@@ -86,7 +86,6 @@ public class Grid
     private bool CanPlaceElementAtCoordinates(GridElement element, int x, int y)
     {
         // Based on the element's coordinates, check:
-        // column
         // corner
 
         return true;
@@ -122,6 +121,28 @@ public class Grid
         {
             result[i] = GetElementFromGrid(x, i);
         }
+
+        return result;
+    }
+
+    public GridElement[] GetCornerFromCoordinatesOfGridElement(int x, int y)
+    {
+        if (gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
+        {
+            throw new ArgumentException("The coordinates you input are out of the grid.");
+        }
+
+        int startX = Mathf.FloorToInt(x/2) * 2;
+
+        int startY = Mathf.FloorToInt(y/2) * 2;
+
+        GridElement[] result = new GridElement[4]
+        {
+           GetElementFromGrid(startX, startY),
+           GetElementFromGrid(startX + 1 ,startY),
+           GetElementFromGrid(startX, startY + 1),
+           GetElementFromGrid(startX + 1, startY + 1)
+        };
 
         return result;
     }

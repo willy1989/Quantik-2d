@@ -460,4 +460,71 @@ public class GridTests
             });
         }
     }
+
+    public class GetCornerFromCoordinatesOfGridElement
+    {
+        private void GridCoordinates_X_Y_Return_Z_Corner(int x, int y, int[] ExpectedGridElementIndexes)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(4, 4);
+
+
+            // Assert
+
+            GridElement[] expectedValue = new GridElement[ExpectedGridElementIndexes.Length];
+
+            for(int i = 0; i < ExpectedGridElementIndexes.Length; i++)
+            {
+                int index = ExpectedGridElementIndexes[i];
+
+                expectedValue[i] = grid_TestHelper.GridElements[index];
+            }
+           
+            GridElement[] actualValue = grid_TestHelper.GetCornerFromCoordinatesOfGridElement(x, y);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [Test]
+        public void GridCoordinates_0_0_Return_Bottom_Left_Corner()
+        {
+            int[] expectedGridElementIndexes = new int[] { 0, 1, 4, 5 };
+
+            GridCoordinates_X_Y_Return_Z_Corner(0, 0, expectedGridElementIndexes);
+        }
+
+        [Test]
+        public void GridCoordinates_2_0_Return_Bottom_Right_Corner()
+        {
+            int[] expectedGridElementIndexes = new int[] { 2, 3, 6, 7 };
+
+            GridCoordinates_X_Y_Return_Z_Corner(2, 0, expectedGridElementIndexes);
+        }
+
+        [Test]
+        public void GridCoordinates_1_3_Return_Top_Left_Corner()
+        {
+            int[] expectedGridElementIndexes = new int[] { 8, 9, 12, 13 };
+
+            GridCoordinates_X_Y_Return_Z_Corner(1, 3, expectedGridElementIndexes);
+        }
+
+        [Test]
+        public void GridCoordinates_Are_Not_Valid_Throw_Argument_Exception()
+        {
+            // Arrange
+
+            FakeGridCoordinateValidator fakeGridCoordinateValidator = new FakeGridCoordinateValidator();
+            fakeGridCoordinateValidator.GridCoordinatesAreValid = false;
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(4, 4);
+            grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                grid_TestHelper.GetCornerFromCoordinatesOfGridElement(0, 0);
+            });
+        }
+    }
 }
