@@ -158,6 +158,7 @@ public class GridTests
             // Arrange
 
             FakeGridCoordinateValidator fakeGridCoordinateValidator = new FakeGridCoordinateValidator();
+            fakeGridCoordinateValidator.GridCoordinatesAreValid = true;
 
             Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
             grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
@@ -252,6 +253,45 @@ public class GridTests
         public void GridCoordinates_1_1_On_2_By_2_Grid_Grid_Cell_Empty_Successfully_Add_Element()
         {
             GridCoordinates_X_Y_Grid_Cell_Empty_Successfully_Add_Element(width: 2, height: 2, x: 1, y: 1, expectedElementGridIndex: 3);
+        }
+
+        [Test]
+        public void InvalidGridCoordinates_Throw_Argument_Exception()
+        {
+            // Arrange
+
+            FakeGridCoordinateValidator fakeGridCoordinateValidator = new FakeGridCoordinateValidator();
+            fakeGridCoordinateValidator.GridCoordinatesAreValid = false;
+
+            Grid_TestHelper grid_TestHelper = CreateEmptyGrid(2, 2);
+            grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
+
+            GridElement addedGridElement = new GridElement();
+
+
+            // Assert
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                grid_TestHelper.AddElement(addedGridElement, 0, 0);
+            });
+        }
+
+        [Test]
+        public void Target_Cell_Is_Not_Empty_Throw_Argument_Exception()
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(width: 2, height: 2);
+
+            GridElement addedGridElement = new GridElement();
+
+            // Assert
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                grid_TestHelper.AddElement(addedGridElement, 0, 0);
+            });
         }
     }
 

@@ -49,11 +49,17 @@ public class Grid
 
     public void AddElement(GridElement elementToAdd, int x, int y)
     {
-        // Check grid coordinates validity
+        bool gridCoordinatesAreValid = gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y);
 
-        // Check whether there already is a element at the specified coordinates
+        if(gridCoordinatesAreValid == false)
+        {
+            throw new ArgumentException("Grid coordinates of elementToAdd are not valid");
+        }
 
-        // Check whether the elementToAdd is null
+        if (CellIsEmpty(x, y) == false)
+        {
+            throw new ArgumentException("The target cell is not empty. You can only add an element to an empty cell.");
+        }
 
         gridElements[GridCoordinateIndex(x, y)] = elementToAdd;
     }
@@ -68,6 +74,13 @@ public class Grid
         GridElement result = gridElements[GridCoordinateIndex(x, y)];
 
         return result;
+    }
+
+    private bool CellIsEmpty(int x, int y)
+    {
+       GridElement element = GetElementFromGrid(x, y);
+
+        return element == null;
     }
 
     protected int GridCoordinateIndex(int x, int y)
