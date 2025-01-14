@@ -11,7 +11,7 @@ public class GridTests
     {
         Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
-        GridElement[] gridElements = CreateGridElements(quantity: width * height, elementsAreEmpty: false);
+        GridElement[] gridElements = UnitTestingUtils.CreateGridElements(quantity: width * height, elementsAreNull: false);
 
         grid_TestHelper.PopulateGrid(gridElements);
 
@@ -22,31 +22,11 @@ public class GridTests
     {
         Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
-        GridElement[] gridElements = CreateGridElements(quantity: width * height, elementsAreEmpty: true);
+        GridElement[] gridElements = UnitTestingUtils.CreateGridElements(quantity: width * height, elementsAreNull: true);
 
         grid_TestHelper.PopulateGrid(gridElements);
 
         return grid_TestHelper;
-    }
-
-    public static GridElement[] CreateGridElements(int quantity, bool elementsAreEmpty)
-    {
-        GridElement[] result = new GridElement[quantity];
-
-        for (int i = 0; i < quantity; i++)
-        {
-            if(elementsAreEmpty == false)
-            {
-                result[i] = new GridElement();
-            }
-
-            else
-            {
-                result[i] = null;
-            }
-        }
-
-        return result;
     }
 
     public class CreateGrid
@@ -128,7 +108,7 @@ public class GridTests
 
             Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width, height);
 
-            GridElement[] gridElements = CreateGridElements(quantity: elementsQuantity, elementsAreEmpty: false);
+            GridElement[] gridElements = UnitTestingUtils.CreateGridElements(quantity: elementsQuantity, elementsAreNull: false);
 
             // Assert
 
@@ -520,6 +500,9 @@ public class GridTests
 
             Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(4, 4);
             grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
+
+
+            // Assert
 
             Assert.Throws<ArgumentException>(() =>
             {

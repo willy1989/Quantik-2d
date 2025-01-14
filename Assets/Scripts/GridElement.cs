@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class GridElement
 {
-    private Shape shape;
+    public GridElementShape Shape { get; private set; }
 
-    private Color color;
+    public GridElementColor Color { get; private set; }
 
     public GridElement()
     {
 
     }
 
-    public GridElement(Shape shape, Color color)
+    public GridElement(GridElementShape shape, GridElementColor color)
     {
-        this.shape = shape;
-        this.color = color;
+        this.Shape = shape;
+        this.Color = color;
     }
 
-    public enum Shape
+    public enum GridElementShape
     {
         Cube,
         Pyramid,
@@ -27,7 +27,7 @@ public class GridElement
         Cylinder
     }
 
-    public enum Color
+    public enum GridElementColor
     {
         Black,
         White
