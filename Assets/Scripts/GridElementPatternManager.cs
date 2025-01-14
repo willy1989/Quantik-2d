@@ -1,62 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GridElementPatternManager
 {
-    public bool TwoElementsOfSameShapeAndDifferentColorsArePresentInSet(GridElement[] gridElements)
+    public bool TwoElementsOfSameShapeAndDifferentColors(GridElement[] gridElements)
     {
-        // Find same elements
-
-        foreach (GridElement outterLoopElement in gridElements)
+        if (gridElements.Length < 2)
         {
-            foreach (GridElement innerLoopElement in gridElements)
-            {
-                if (innerLoopElement == outterLoopElement)
-                    continue;
-
-                if(innerLoopElement.Shape == outterLoopElement.Shape &&
-                   innerLoopElement.Color != outterLoopElement.Color)
-                {
-                    return true;
-                }
-            }
+            throw new ArgumentException("You need to provide at least 2 elements for a comparison to occur.");
         }
 
-        return false;
-    }
-    
-
-    public List<GridElement> FindElementsOfSameShape(GridElement[] gridElements, GridElement.GridElementShape targetShape)
-    {
-        List<GridElement> result = new List<GridElement>();
-
-        foreach (GridElement element in gridElements)
-        {
-            if(element.Shape == targetShape)
-            {
-                result.Add(element);
-            }
-        }
-
-        return result;
+        return gridElements
+            .GroupBy(element => element.Shape)
+            .Any(group => group.Select(element => element.Color).Distinct().Count() > 1);
     }
 
-    public bool TwoElementsAreOfDifferentColors(GridElement[] gridElements)
-    {
-        foreach (GridElement outterElement in gridElements)
-        {
-            foreach (GridElement innerElement in gridElements)
-            {
-                if (outterElement == innerElement)
-                    continue;
 
-                if (outterElement.Color != innerElement.Color)
-                    return true;
-            }
+    public bool ElementsAreOfDifferentShapes(GridElement[] gridElements)
+    {
+        if (gridElements.Length < 2)
+        {
+            throw new ArgumentException("You need to provide at least 2 elements for a comparison to occur.");
         }
 
-        return false;
+        return gridElements
+            .Select(element => element.Shape)
+            .Distinct()
+            .Count() == gridElements.Length;
     }
 }
