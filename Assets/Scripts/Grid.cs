@@ -56,7 +56,7 @@ public class Grid
             throw new ArgumentException("Grid coordinates of elementToAdd are not valid");
         }
 
-        if (CellIsEmpty(x, y) == false)
+        if (IsCellEmpty(x, y) == false)
         {
             throw new ArgumentException("The target cell is not empty. You can only add an element to an empty cell.");
         }
@@ -76,17 +76,17 @@ public class Grid
         return result;
     }
 
-    private bool CellIsEmpty(int x, int y)
+    // To do: create unit test
+    public bool IsCellEmpty(int x, int y)
     {
        GridElement element = GetElementFromGrid(x, y);
 
         return element == null;
     }
 
-    private bool CanPlaceElementAtCoordinates(GridElement element, int x, int y)
+    // To do: create unit test
+    public bool CanPlaceElementAtCoordinates(GridElement element, int x, int y)
     {
-        // Based on the element's coordinates, check:
-        // corner
 
         return true;
     }
