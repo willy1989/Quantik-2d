@@ -22,6 +22,9 @@ public class Grid
         }
     }
 
+    private GridElementPatternManager gridPatternManager = new GridElementPatternManager();
+
+
     protected int width { get; private set; }
     protected int height { get; private set; }
 
@@ -64,6 +67,24 @@ public class Grid
         gridElements[GridCoordinateIndex(x, y)] = elementToAdd;
     }
 
+    public void RemoveElement(int x, int y)
+    {
+        bool gridCoordinatesAreValid = gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y);
+
+        if (gridCoordinatesAreValid == false)
+        {
+            throw new ArgumentException("Grid coordinates of elementToAdd are not valid");
+        }
+
+        if (IsCellEmpty(x, y) == true)
+        {
+            throw new ArgumentException("The target cell is empty. There is nothing to remove.");
+        }
+
+        gridElements[GridCoordinateIndex(x, y)] = null;
+
+    }
+
     public GridElement GetElementFromGrid(int x, int y)
     {
         if(gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
@@ -86,13 +107,6 @@ public class Grid
         GridElement element = GetElementFromGrid(x, y);
 
         return element == null;
-    }
-
-    // To do: create unit test
-    public bool CanPlaceElementAtCoordinates(GridElement element, int x, int y)
-    {
-
-        return true;
     }
 
     public GridElement[] GetRowFromCoordinatesOfGridElement(int x, int y)
@@ -154,5 +168,15 @@ public class Grid
     protected int GridCoordinateIndex(int x, int y)
     {
         return width * y + x;
+    }
+
+    public bool RowIsLegal(int xGridCoordinate, int yGridCoordinate)
+    {
+        // Row check
+        GridElement[] gridElements = GetRowFromCoordinatesOfGridElement(xGridCoordinate, yGridCoordinate);
+
+        bool result = !gridPatternManager.TwoElementsOfSameShapeAndDifferentColors(gridElements);
+
+        return result;
     }
 }

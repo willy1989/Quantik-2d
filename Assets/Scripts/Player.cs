@@ -51,8 +51,15 @@ public class Player
         if (cellIsEmpty == false)
             return;
 
+        // Temporarily add the element on the grid
+        GridElement gridElement = new GridElement(shape, elementColor);
+
+        grid.AddElement(gridElement,xGridCoordinate, yGridCoordinate);
+
         // Check whether it is legal to add a piece there
     }
+
+
 
     // To do: create unit test
     private bool IsShapeAvailable(GridElement.GridElementShape selectedShape)
