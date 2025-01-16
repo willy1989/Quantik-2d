@@ -59,6 +59,11 @@ public class Player
         // Check whether it is legal to add a piece there
 
         bool rowIsLegal = grid.IsRowLegal(xGridCoordinate, yGridCoordinate);
+
+        bool columnIsLegal = grid.IsColumnLegal(xGridCoordinate, yGridCoordinate);
+
+        bool cornerIsLegal = grid.IsCornerLegal(xGridCoordinate, yGridCoordinate);
+
     }
 
 

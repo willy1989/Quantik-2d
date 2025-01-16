@@ -14,6 +14,7 @@ public class GridElementPatternManager
         }
 
         return gridElements
+            .Where(element => element != null)
             .GroupBy(element => element.Shape)
             .Any(group => group.Select(element => element.Color).Distinct().Count() > 1);
     }

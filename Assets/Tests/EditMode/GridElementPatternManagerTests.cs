@@ -72,6 +72,19 @@ public class GridElementPatternManagerTests
         }
 
         [Test]
+        public void Two_Elements_In_Set_Including_One_Null_Return_False()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.Black),
+                null
+            };
+
+            X_Elements_In_Set_Y_Element_Of_Same_Shape_And_Of_Different_Colors_Return_True_Or_False(gridElements, expectedValue: false);
+        }
+
+
+        [Test]
         public void Less_Than_2_Elements_Throw_Argument_Exception()
         {
             // Arrange
