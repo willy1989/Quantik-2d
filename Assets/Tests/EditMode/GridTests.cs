@@ -627,7 +627,7 @@ public class GridTests
         }
     }
 
-    public class RowIsLegal
+    public class IsRowLegal
     {
         private void Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(int x, int y, GridElement[] gridElements, bool expectedValue)
         {
@@ -641,7 +641,7 @@ public class GridTests
             grid_TestHelper.AddElement(gridElements[3], x: 3, y: 0);
 
             // Assert
-            bool actualValue = grid_TestHelper.RowIsLegal(xGridCoordinate: x, yGridCoordinate: y);
+            bool actualValue = grid_TestHelper.IsRowLegal(xGridCoordinate: x, yGridCoordinate: y);
 
             Assert.AreEqual(expectedValue, actualValue);
         }
@@ -687,6 +687,135 @@ public class GridTests
             };
 
             Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(x: 1, y: 0, gridElements, expectedValue: false);
+        }
+    }
+
+    public class IsColumnLegal
+    {
+        private void Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(int x, int y, GridElement[] gridElements, bool expectedValue)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            grid_TestHelper.AddElement(gridElements[0], x: 0, y: 0);
+            grid_TestHelper.AddElement(gridElements[1], x: 0, y: 1);
+            grid_TestHelper.AddElement(gridElements[2], x: 0, y: 2);
+            grid_TestHelper.AddElement(gridElements[3], x: 0, y: 3);
+
+
+            // Assert
+
+            bool actualValue = grid_TestHelper.IsColumnLegal(xGridCoordinate: x, yGridCoordinate: y);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [Test]
+        public void Coordinates_0_0_No_Two_Same_Shapes_Return_True()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape:GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+            };
+
+            Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(x: 0, y: 0, gridElements, expectedValue: true);
+        }
+
+        [Test]
+        public void Coordinates_0_0_Two_Same_Shapes_Of_Same_Color_Return_True()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape:GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+            };
+
+            Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(x: 0, y: 0, gridElements, expectedValue: true);
+        }
+
+        [Test]
+        public void Coordinates_1_0_Two_Same_Shapes_Of_Different_Color_Return_False()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape:GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.Black),
+                new GridElement(shape:GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+            };
+
+            Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(x: 0, y: 1, gridElements, expectedValue: false);
+        }
+    }
+
+
+    public class IsCornerLegal
+    {
+        private void Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(int x, int y, GridElement[] gridElements, bool expectedValue)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            grid_TestHelper.AddElement(gridElements[0], x: 0, y: 0);
+            grid_TestHelper.AddElement(gridElements[1], x: 1, y: 0);
+            grid_TestHelper.AddElement(gridElements[2], x: 0, y: 1);
+            grid_TestHelper.AddElement(gridElements[3], x: 1, y: 1);
+
+
+            // Assert
+
+            bool actualValue = grid_TestHelper.IsCornerLegal(xGridCoordinate: x, yGridCoordinate: y);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [Test]
+        public void Coordinates_0_0_No_Two_Same_Shapes_Return_True()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape:GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+            };
+
+            Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(x: 0, y: 0, gridElements, expectedValue: true);
+        }
+
+        [Test]
+        public void Coordinates_0_0_Two_Same_Shapes_Of_Same_Color_Return_True()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape:GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+            };
+
+            Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(x: 0, y: 0, gridElements, expectedValue: true);
+        }
+
+        [Test]
+        public void Coordinates_1_0_Two_Same_Shapes_Of_Different_Color_Return_False()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape:GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape:GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.Black),
+                new GridElement(shape:GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+            };
+
+            Coordinates_X_Y_Two_Same_Or_Different_Shape_Same_Or_Different_Color_Return_True_Or_False(x: 0, y: 1, gridElements, expectedValue: false);
         }
     }
 }

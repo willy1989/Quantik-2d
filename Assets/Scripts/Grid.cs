@@ -170,10 +170,27 @@ public class Grid
         return width * y + x;
     }
 
-    public bool RowIsLegal(int xGridCoordinate, int yGridCoordinate)
+    public bool IsRowLegal(int xGridCoordinate, int yGridCoordinate)
     {
-        // Row check
         GridElement[] gridElements = GetRowFromCoordinatesOfGridElement(xGridCoordinate, yGridCoordinate);
+
+        bool result = !gridPatternManager.TwoElementsOfSameShapeAndDifferentColors(gridElements);
+
+        return result;
+    }
+
+    public bool IsColumnLegal(int xGridCoordinate, int yGridCoordinate)
+    {
+        GridElement[] gridElements = GetColumnFromCoordinatesOfGridElement(xGridCoordinate, yGridCoordinate);
+
+        bool result = !gridPatternManager.TwoElementsOfSameShapeAndDifferentColors(gridElements);
+
+        return result;
+    }
+
+    public bool IsCornerLegal(int xGridCoordinate, int yGridCoordinate)
+    {
+        GridElement[] gridElements = GetCornerFromCoordinatesOfGridElement(xGridCoordinate, yGridCoordinate);
 
         bool result = !gridPatternManager.TwoElementsOfSameShapeAndDifferentColors(gridElements);
 

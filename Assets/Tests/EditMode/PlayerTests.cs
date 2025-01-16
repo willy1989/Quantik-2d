@@ -42,9 +42,12 @@ public class PlayerTests
         public void X_Different_Shapes_Creates_One_Pair_For_Each_Shape()
         {
             // Arrange
+
             Player_TestHelper player_TestHelper = new Player_TestHelper(GridElement.GridElementColor.White, new Grid(width: 4, height: 4));
 
+
             // Assert
+
             var shapes = Enum.GetValues(typeof(GridElement.GridElementShape)).Cast<GridElement.GridElementShape>();
 
             var shapeCounts = player_TestHelper.StartingShapes
@@ -55,6 +58,42 @@ public class PlayerTests
             {
                 Assert.AreEqual(2, shapeCounts.GetValueOrDefault(shape, 0), $"Shape {shape} does not have exactly two occurrences.");
             }
+        }
+    }
+
+    public class PlayPiece
+    {
+        [Test]
+        public void DummyMethod()
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            GridElement[] gridElements =
+            {
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.Black),
+            };
+
+            grid_TestHelper.AddElement(gridElements[0], x: 1, y: 0);
+            grid_TestHelper.AddElement(gridElements[1], x: 2, y: 0);
+            grid_TestHelper.AddElement(gridElements[2], x: 3, y: 0);
+
+            Player_TestHelper player_TestHelper = new Player_TestHelper(GridElement.GridElementColor.White, grid_TestHelper);
+
+
+            // Act
+
+            player_TestHelper.PlayPiece(GridElement.GridElementShape.Pyramid, xGridCoordinate: 0, yGridCoordinate: 0);
+
+
+            // Assert
+
+            
+
+
         }
     }
 }

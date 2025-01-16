@@ -57,6 +57,8 @@ public class Player
         grid.AddElement(gridElement,xGridCoordinate, yGridCoordinate);
 
         // Check whether it is legal to add a piece there
+
+        bool rowIsLegal = grid.IsRowLegal(xGridCoordinate, yGridCoordinate);
     }
 
 
