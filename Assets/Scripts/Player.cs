@@ -64,6 +64,12 @@ public class Player
 
         bool cornerIsLegal = grid.IsCornerLegal(xGridCoordinate, yGridCoordinate);
 
+        // Remove piece if the move was not legal
+
+        if(rowIsLegal == false || columnIsLegal == false || cornerIsLegal == false)
+        {
+            grid.RemoveElement(xGridCoordinate, yGridCoordinate);
+        }
     }
 
 
