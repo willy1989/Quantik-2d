@@ -76,10 +76,14 @@ public class Grid
         return result;
     }
 
-    // To do: create unit test
     public bool IsCellEmpty(int x, int y)
     {
-       GridElement element = GetElementFromGrid(x, y);
+        if (gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
+        {
+            throw new ArgumentException("The x and y coordinates you specified are beyond the scope of the grid.");
+        }
+
+        GridElement element = GetElementFromGrid(x, y);
 
         return element == null;
     }

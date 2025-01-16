@@ -510,4 +510,65 @@ public class GridTests
             });
         }
     }
+
+    public class IsCellEmpty
+    {
+        private void Coordinates_X_Y_Cell_Is_Empty_Return_True_Or_False(int x, int y, bool gridIsPopulated, bool expectedValue)
+        {
+            // Arrange
+
+            Grid_TestHelper grid_TestHelper;
+
+            if (gridIsPopulated == true)
+            {
+                grid_TestHelper = CreatePopulatedGrid(width: 4, height: 4);
+            }
+
+            else
+            {
+                grid_TestHelper = CreateEmptyGrid(width: 4, height: 4);
+            }
+
+            // Assert
+
+            bool actualValue = grid_TestHelper.IsCellEmpty(x, y);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [Test]
+        public void Coordinates_0_0_Cell_Is_Empty_Return_True()
+        {
+            Coordinates_X_Y_Cell_Is_Empty_Return_True_Or_False(x: 0, y: 0, gridIsPopulated: false, expectedValue: true);
+        }
+
+        [Test]
+        public void Coordinates_0_1_Cell_Is_Empty_Return_True()
+        {
+            Coordinates_X_Y_Cell_Is_Empty_Return_True_Or_False(x: 0, y: 1, gridIsPopulated: false, expectedValue: true);
+        }
+
+        [Test]
+        public void Coordinates_0_0_Cell_Is_Not_Empty_Return_False()
+        {
+            Coordinates_X_Y_Cell_Is_Empty_Return_True_Or_False(x: 0, y: 1, gridIsPopulated: true, expectedValue: false);
+        }
+
+        [Test]
+        public void GridCoordinates_Are_Not_Valid_Throw_Argument_Exception()
+        {
+            // Arrange
+
+            FakeGridCoordinateValidator fakeGridCoordinateValidator = new FakeGridCoordinateValidator();
+            fakeGridCoordinateValidator.GridCoordinatesAreValid = false;
+
+            Grid_TestHelper grid_TestHelper = CreatePopulatedGrid(4, 4);
+            grid_TestHelper.GridCoordinateValidator = fakeGridCoordinateValidator;
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                grid_TestHelper.IsCellEmpty(0, 0);
+            });
+        }
+    }
 }

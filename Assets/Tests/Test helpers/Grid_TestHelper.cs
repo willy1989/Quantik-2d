@@ -9,12 +9,12 @@ public class Grid_TestHelper : Grid
 
     public GridElement[] GridElements => gridElements;
 
+    public Grid_TestHelper(int width, int height) : base(width, height)
+    {
+    }
+
     public int GridCoordinateIndex_UnitTest(int x, int y)
     {
         return GridCoordinateIndex(x, y);
-    }
-
-    public Grid_TestHelper(int width, int height) : base(width, height)
-    {
     }
 }
