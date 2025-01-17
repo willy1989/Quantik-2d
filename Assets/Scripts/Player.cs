@@ -11,6 +11,8 @@ public class Player
 
     private Grid grid;
 
+    public Action OnPiecePlaced;
+
     public Player(GridElement.GridElementColor elementColor, Grid grid)
     {
         this.elementColor = elementColor;
@@ -42,8 +44,6 @@ public class Player
         if (isShapeAvailable == false)
             return;
 
-        startingShapes.RemoveAt(startingShapes.IndexOf(shape));
-
         // Check whether the grid cell is empty or not
 
         bool cellIsEmpty = grid.IsCellEmpty(xGridCoordinate, yGridCoordinate);
@@ -69,6 +69,12 @@ public class Player
         if(rowIsLegal == false || columnIsLegal == false || cornerIsLegal == false)
         {
             grid.RemoveElement(xGridCoordinate, yGridCoordinate);
+        }
+
+        else
+        {
+            startingShapes.RemoveAt(startingShapes.IndexOf(shape));
+            OnPiecePlaced?.Invoke();
         }
     }
 

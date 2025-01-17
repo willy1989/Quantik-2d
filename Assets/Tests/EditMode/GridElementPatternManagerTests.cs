@@ -194,4 +194,104 @@ public class GridElementPatternManagerTests
             });
         }
     }
+
+    public class WinConditionMet
+    {
+        private void X_Elements_Return_True_Or_False(GridElement[] gridElements, bool expectedValue)
+        {
+            // Arrange
+
+            GridElementPatternManager gridElementPatternManager = new GridElementPatternManager();
+
+
+            // Assert
+
+            bool actualValue = gridElementPatternManager.WinConditionMet(gridElements);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [Test]
+        public void Four_Different_Elements_Same_Colors_Return_True()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+            };
+
+            X_Elements_Return_True_Or_False(gridElements, expectedValue: true);
+        }
+
+        [Test]
+        public void Four_Different_Elements_Different_Colors_Return_True()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+            };
+
+            X_Elements_Return_True_Or_False(gridElements, expectedValue: true);
+        }
+
+        [Test]
+        public void Four_Elements_But_3_Distinct_Elements_Return_False()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.Black),
+            };
+
+            X_Elements_Return_True_Or_False(gridElements, expectedValue: false);
+        }
+
+        [Test]
+        public void Four_Elements_But_2_Distinct_Elements_Return_False()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.Black),
+            };
+
+            X_Elements_Return_True_Or_False(gridElements, expectedValue: false);
+        }
+
+        [Test]
+        public void Three_Different_Elements_Return_False()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.Black),
+            };
+
+            X_Elements_Return_True_Or_False(gridElements, expectedValue: false);
+        }
+
+        [Test]
+        public void Two_Different_Elements_Return_False()
+        {
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.Black),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.Black),
+            };
+
+            X_Elements_Return_True_Or_False(gridElements, expectedValue: false);
+        }
+
+        
+    }
 }

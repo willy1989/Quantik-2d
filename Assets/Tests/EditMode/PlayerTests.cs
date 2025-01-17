@@ -107,6 +107,7 @@ public class PlayerTests
 
             Player_TestHelper player_TestHelper = new Player_TestHelper(GridElement.GridElementColor.White, grid_TestHelper);
 
+            int startingShapesCount = player_TestHelper.StartingShapes.Count;
 
             // Act
 
@@ -115,6 +116,7 @@ public class PlayerTests
 
             // Assert
             Assert.IsNotNull(grid_TestHelper.GetElementFromGrid(x, y));
+            Assert.AreEqual(player_TestHelper.StartingShapes.Count, startingShapesCount - 1);
         }
 
         [Test]
@@ -138,6 +140,7 @@ public class PlayerTests
             // Arrange
 
             Player_TestHelper player_TestHelper = new Player_TestHelper(playerColor, grid_TestHelper);
+            int startingShapesCount = player_TestHelper.StartingShapes.Count;
 
 
             // Act
@@ -147,6 +150,7 @@ public class PlayerTests
 
             // Assert
             Assert.IsNull(grid_TestHelper.GetElementFromGrid(x, y));
+            Assert.AreEqual(player_TestHelper.StartingShapes.Count, startingShapesCount);
         }
 
         [Test]
@@ -156,9 +160,6 @@ public class PlayerTests
 
             Coordinate_X_Y_Move_Is_illegal_Piece_Is_Not_Placed(x: 0, y: 0, grid_TestHelper, GridElement.GridElementShape.Cylinder, GridElement.GridElementColor.White);
         }
-
-
-
     }
 }
 
