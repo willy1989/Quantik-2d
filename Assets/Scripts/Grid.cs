@@ -54,10 +54,7 @@ public class Grid
     {
         bool gridCoordinatesAreValid = gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y);
 
-        if(gridCoordinatesAreValid == false)
-        {
-            throw new ArgumentException("Grid coordinates of elementToAdd are not valid");
-        }
+        ValidateGridCoordinates(width, height, x, y);
 
         if (IsCellEmpty(x, y) == false)
         {
@@ -69,12 +66,7 @@ public class Grid
 
     public void RemoveElement(int x, int y)
     {
-        bool gridCoordinatesAreValid = gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y);
-
-        if (gridCoordinatesAreValid == false)
-        {
-            throw new ArgumentException("Grid coordinates of elementToAdd are not valid");
-        }
+        ValidateGridCoordinates(width, height, x, y);
 
         if (IsCellEmpty(x, y) == true)
         {
@@ -87,10 +79,7 @@ public class Grid
 
     public GridElement GetElementFromGrid(int x, int y)
     {
-        if(gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
-        {
-            throw new ArgumentException("The x and y coordinates you specified are beyond the scope of the grid.");
-        }
+        ValidateGridCoordinates(width, height, x, y);
 
         GridElement result = gridElements[GridCoordinateIndex(x, y)];
 
@@ -99,10 +88,7 @@ public class Grid
 
     public bool IsCellEmpty(int x, int y)
     {
-        if (gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
-        {
-            throw new ArgumentException("The x and y coordinates you specified are beyond the scope of the grid.");
-        }
+        ValidateGridCoordinates(width, height, x, y);
 
         GridElement element = GetElementFromGrid(x, y);
 
@@ -111,10 +97,7 @@ public class Grid
 
     public GridElement[] GetRowFromCoordinatesOfGridElement(int x, int y)
     {
-        if(gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
-        {
-            throw new ArgumentException("The coordinates you input are out of the grid.");
-        }
+        ValidateGridCoordinates(width, height, x, y);
 
         GridElement[] result = new GridElement[4];
 
@@ -128,10 +111,7 @@ public class Grid
 
     public GridElement[] GetColumnFromCoordinatesOfGridElement(int x, int y)
     {
-        if (gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
-        {
-            throw new ArgumentException("The coordinates you input are out of the grid.");
-        }
+        ValidateGridCoordinates(width, height, x, y);
 
         GridElement[] result = new GridElement[height];
 
@@ -145,10 +125,7 @@ public class Grid
 
     public GridElement[] GetCornerFromCoordinatesOfGridElement(int x, int y)
     {
-        if (gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
-        {
-            throw new ArgumentException("The coordinates you input are out of the grid.");
-        }
+        ValidateGridCoordinates(width, height, x, y);
 
         int startX = Mathf.FloorToInt(x/2) * 2;
 
@@ -195,5 +172,13 @@ public class Grid
         bool result = !gridPatternManager.TwoElementsOfSameShapeAndDifferentColors(gridElements);
 
         return result;
+    }
+
+    private void ValidateGridCoordinates(int height, int width, int x, int y)
+    {
+        if (gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y) == false)
+        {
+            throw new ArgumentException("The coordinates you input are out of the grid.");
+        }
     }
 }
