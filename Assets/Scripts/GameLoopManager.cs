@@ -8,8 +8,8 @@ public class GameLoopManager : MonoBehaviour
 
     private GridElementPatternManager gridElementPatternManager = new GridElementPatternManager();
 
-    private Player whitePlayer;
-    private Player blackPlayer;
+    protected Player whitePlayer;
+    protected Player blackPlayer;
 
     private Player currentPlayer;
 
@@ -19,6 +19,11 @@ public class GameLoopManager : MonoBehaviour
     private bool blackPlayerFinishedTheirTurn = false;
 
     private void Awake()
+    {
+        SetUp();
+    }
+
+    private void SetUp()
     {
         whitePlayer = new Player(GridElement.GridElementColor.White, grid);
         blackPlayer = new Player(GridElement.GridElementColor.Black, grid);
@@ -57,7 +62,7 @@ public class GameLoopManager : MonoBehaviour
 
     }
 
-    private void PlayTurn(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)
+    protected void PlayTurn(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)
     {
         Player cachedPlayer = currentPlayer;
 
@@ -72,7 +77,7 @@ public class GameLoopManager : MonoBehaviour
     }
 
     // To do: create unit tests
-    private Player GetPlayerPlayingThisTurn()
+    protected Player GetPlayerPlayingThisTurn()
     {
         int turnNumber = turnIndex % 2;
 
