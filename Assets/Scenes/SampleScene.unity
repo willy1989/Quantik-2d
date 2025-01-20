@@ -122,6 +122,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &27122411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 27122413}
+  - component: {fileID: 27122412}
+  m_Layer: 0
+  m_Name: Grid graphics manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &27122412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27122411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d05f3cecf698834b866329c796d5dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridBackgroundTilePrefab: {fileID: 8621852973329580356, guid: 2b2fd54522475d44381bab640045ded1, type: 3}
+  CubePiecePrefab: {fileID: 3459247957806632697, guid: 415da971090989548b4ba83029debcf2, type: 3}
+  PyramidPiecePrefab: {fileID: 3890125885021503706, guid: 0babcb00095c7f947a9b7311166f55a4, type: 3}
+  SpherePiecePrefab: {fileID: 3326653071558421392, guid: 98a7dad5ad2d69145ac0dce84a43440c, type: 3}
+  CylinderPiecePrefab: {fileID: 484015018674282055, guid: e5a1049cb5fff3c48be0786e04fe644f, type: 3}
+--- !u!4 &27122413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27122411}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39a0e1eceda6a149b54c2d0c25ee56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridGraphicsManager: {fileID: 27122412}
 --- !u!4 &1440923764
 Transform:
   m_ObjectHideFlags: 0
@@ -392,3 +442,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1440923764}
+  - {fileID: 27122413}

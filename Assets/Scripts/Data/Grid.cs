@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Grid
 {
@@ -25,13 +26,16 @@ public class Grid
     private GridElementPatternManager gridPatternManager = new GridElementPatternManager();
 
 
-    protected int width { get; private set; }
-    protected int height { get; private set; }
+    public int Width { get; private set; }
+    public int Height { get; private set; }
+
+    public Action<GridElement, int, int> OnGridElementAdded;
+    public Action<GridElement> OnGridElementRemoved;
 
     public Grid(int width, int height)
     {
-        this.width = width;
-        this.height = height;
+        this.Width = width;
+        this.Height = height;
 
         gridElements = new GridElement[width * height];
     }
@@ -52,9 +56,9 @@ public class Grid
 
     public void AddElement(GridElement elementToAdd, int x, int y)
     {
-        bool gridCoordinatesAreValid = gridCoordinateValidator.AreGridCoordinatesValid(height, width, x, y);
+        bool gridCoordinatesAreValid = gridCoordinateValidator.AreGridCoordinatesValid(Height, Width, x, y);
 
-        ValidateGridCoordinates(width, height, x, y);
+        ValidateGridCoordinates(Width, Height, x, y);
 
         if (IsCellEmpty(x, y) == false)
         {
@@ -62,24 +66,27 @@ public class Grid
         }
 
         gridElements[GridCoordinateIndex(x, y)] = elementToAdd;
+
+        OnGridElementAdded?.Invoke(elementToAdd, x, y);
     }
 
     public void RemoveElement(int x, int y)
     {
-        ValidateGridCoordinates(width, height, x, y);
+        ValidateGridCoordinates(Width, Height, x, y);
 
         if (IsCellEmpty(x, y) == true)
         {
             throw new ArgumentException("The target cell is empty. There is nothing to remove.");
         }
 
-        gridElements[GridCoordinateIndex(x, y)] = null;
+        OnGridElementRemoved?.Invoke(GetElementFromGrid(x, y));
 
+        gridElements[GridCoordinateIndex(x, y)] = null;
     }
 
     public GridElement GetElementFromGrid(int x, int y)
     {
-        ValidateGridCoordinates(width, height, x, y);
+        ValidateGridCoordinates(Width, Height, x, y);
 
         GridElement result = gridElements[GridCoordinateIndex(x, y)];
 
@@ -88,7 +95,7 @@ public class Grid
 
     public bool IsCellEmpty(int x, int y)
     {
-        ValidateGridCoordinates(width, height, x, y);
+        ValidateGridCoordinates(Width, Height, x, y);
 
         GridElement element = GetElementFromGrid(x, y);
 
@@ -97,7 +104,7 @@ public class Grid
 
     public GridElement[] GetRowFromCoordinatesOfGridElement(int x, int y)
     {
-        ValidateGridCoordinates(width, height, x, y);
+        ValidateGridCoordinates(Width, Height, x, y);
 
         GridElement[] result = new GridElement[4];
 
@@ -111,11 +118,11 @@ public class Grid
 
     public GridElement[] GetColumnFromCoordinatesOfGridElement(int x, int y)
     {
-        ValidateGridCoordinates(width, height, x, y);
+        ValidateGridCoordinates(Width, Height, x, y);
 
-        GridElement[] result = new GridElement[height];
+        GridElement[] result = new GridElement[Height];
 
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < Height; i++)
         {
             result[i] = GetElementFromGrid(x, i);
         }
@@ -125,7 +132,7 @@ public class Grid
 
     public GridElement[] GetCornerFromCoordinatesOfGridElement(int x, int y)
     {
-        ValidateGridCoordinates(width, height, x, y);
+        ValidateGridCoordinates(Width, Height, x, y);
 
         int startX = Mathf.FloorToInt(x/2) * 2;
 
@@ -144,7 +151,7 @@ public class Grid
 
     protected int GridCoordinateIndex(int x, int y)
     {
-        return width * y + x;
+        return Width * y + x;
     }
 
     public bool IsRowLegal(int xGridCoordinate, int yGridCoordinate)

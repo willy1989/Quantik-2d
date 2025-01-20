@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Grid_TestHelper : Grid
 {
-    public int Width => width;
-    public int Height => height;
+    public int Width => base.Width;
+    public int Height => base.Height;
 
     public GridElement[] GridElements => gridElements;
 

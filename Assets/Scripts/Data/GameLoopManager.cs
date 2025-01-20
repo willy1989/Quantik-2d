@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameLoopManager : MonoBehaviour
 {
+    [SerializeField] private GridGraphicsManager gridGraphicsManager;
+
     protected Grid grid;
 
     private GridElementPatternManager gridElementPatternManager = new GridElementPatternManager();
@@ -23,6 +25,14 @@ public class GameLoopManager : MonoBehaviour
         SetUp();
     }
 
+    private void Start()
+    {
+        GridElement gridElement = new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White);
+
+        grid.AddElement(gridElement, x: 0, y: 1);
+        grid.RemoveElement(x: 0, y: 1);
+    }
+
     private void SetUp()
     {
         whitePlayer = new Player(GridElement.GridElementColor.White, grid);
@@ -33,34 +43,9 @@ public class GameLoopManager : MonoBehaviour
 
         currentPlayer = GetPlayerPlayingThisTurn();
         grid = new Grid(width: 4, height: 4);
-    }
 
-    private void Start()
-    {
-        // White
-        PlayTurn(GridElement.GridElementShape.Pyramid, xGridCoordinate: 0, yGridCoordinate: 0);
-
-        // Black
-        PlayTurn(GridElement.GridElementShape.Pyramid, xGridCoordinate: 3, yGridCoordinate: 2);
-
-        // White
-        PlayTurn(GridElement.GridElementShape.Cube, xGridCoordinate: 1, yGridCoordinate: 0);
-
-        // Black
-        PlayTurn(GridElement.GridElementShape.Cube, xGridCoordinate: 2, yGridCoordinate: 2);
-
-        // White
-        PlayTurn(GridElement.GridElementShape.Sphere, xGridCoordinate: 2, yGridCoordinate: 0);
-
-        // Black
-        PlayTurn(GridElement.GridElementShape.Sphere, xGridCoordinate: 1, yGridCoordinate: 2);
-
-        // White
-        PlayTurn(GridElement.GridElementShape.Cylinder, xGridCoordinate: 3, yGridCoordinate: 0);
-
-        // Black
-        PlayTurn(GridElement.GridElementShape.Cylinder, xGridCoordinate: 0, yGridCoordinate: 2);
-
+        gridGraphicsManager.SetUp(grid);
+        gridGraphicsManager.GeneratebackgroundTiles();
     }
 
     protected void PlayTurn(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)
@@ -92,7 +77,6 @@ public class GameLoopManager : MonoBehaviour
         turnIndex++;
     }
 
-    // To do: create unit tests
     protected bool CheckWinCondition(int x, int y)
     {
         GridElement[] rowElements = grid.GetRowFromCoordinatesOfGridElement(x, y);
