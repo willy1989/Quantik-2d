@@ -77,4 +77,147 @@ public class GameLoopManagerTests
             Turn_X_Return_Y_Player(turnIndex: 3, playerPair.WhitePlayer, playerPair.BlackPlayer, expectedValue: playerPair.BlackPlayer);
         }
     }
+
+    public class CheckWinCondition
+    {
+        private void GridCoordinates_X_Y_Set_On_Grid_Return_True_or_False(int x, int y, Grid_TestHelper grid_TestHelper, bool expectedValue)
+        {
+            // Arrange
+
+            GameObject gameObject = new GameObject();
+            GameLoopManager_TestHelper gameLoopManager_TestHelper = gameObject.AddComponent<GameLoopManager_TestHelper>();
+
+            gameLoopManager_TestHelper.Grid = grid_TestHelper;
+
+
+            // Assert
+            bool actualValue = gameLoopManager_TestHelper.CheckWinCondition_UnitTest(x: 0, y: 0);
+
+            Assert.AreEqual(expectedValue, actualValue);
+        }
+
+        [Test]
+        public void GridCoordinates_0_0_Bottom_Row_4_Different_Pieces_Return_True()
+        {
+            // Arrange
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+            };
+
+            grid_TestHelper.GridElements[0] = gridElements[0];
+            grid_TestHelper.GridElements[1] = gridElements[1];
+            grid_TestHelper.GridElements[2] = gridElements[2];
+            grid_TestHelper.GridElements[3] = gridElements[3];
+
+            GridCoordinates_X_Y_Set_On_Grid_Return_True_or_False(x: 0, y: 0, grid_TestHelper, expectedValue: true);
+        }
+
+        [Test]
+        public void GridCoordinates_0_0_Bottom_Row_3_Different_Pieces_Return_False()
+        {
+            // Arrange
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+            };
+
+            grid_TestHelper.GridElements[0] = gridElements[0];
+            grid_TestHelper.GridElements[1] = gridElements[1];
+            grid_TestHelper.GridElements[2] = gridElements[2];
+
+            GridCoordinates_X_Y_Set_On_Grid_Return_True_or_False(x: 0, y: 0, grid_TestHelper, expectedValue: false);
+        }
+
+        [Test]
+        public void GridCoordinates_0_0_Second_Column_4_Different_Pieces_Return_True()
+        {
+            // Arrange
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+            };
+
+            grid_TestHelper.GridElements[0] = gridElements[0];
+            grid_TestHelper.GridElements[4] = gridElements[1];
+            grid_TestHelper.GridElements[8] = gridElements[2];
+            grid_TestHelper.GridElements[12] = gridElements[3];
+
+            GridCoordinates_X_Y_Set_On_Grid_Return_True_or_False(x: 0, y: 0, grid_TestHelper, expectedValue: true);
+        }
+
+        [Test]
+        public void GridCoordinates_0_0_Second_Column_2_Different_Pieces_Return_False()
+        {
+            // Arrange
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+            };
+
+            grid_TestHelper.GridElements[0] = gridElements[0];
+            grid_TestHelper.GridElements[4] = gridElements[1];
+
+            GridCoordinates_X_Y_Set_On_Grid_Return_True_or_False(x: 0, y: 0, grid_TestHelper, expectedValue: false);
+        }
+
+        [Test]
+        public void GridCoordinates_0_0_Bottom_Left_Corner_4_Different_Pieces_Return_True()
+        {
+            // Arrange
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cube, color: GridElement.GridElementColor.White),
+            };
+
+            grid_TestHelper.GridElements[0] = gridElements[0];
+            grid_TestHelper.GridElements[1] = gridElements[1];
+            grid_TestHelper.GridElements[4] = gridElements[2];
+            grid_TestHelper.GridElements[5] = gridElements[3];
+
+            GridCoordinates_X_Y_Set_On_Grid_Return_True_or_False(x: 0, y: 0, grid_TestHelper, expectedValue: true);
+        }
+
+        [Test]
+        public void GridCoordinates_0_1_Bottom_Left_Corner_3_Different_Pieces_Return_False()
+        {
+            // Arrange
+            Grid_TestHelper grid_TestHelper = new Grid_TestHelper(width: 4, height: 4);
+
+            GridElement[] gridElements = new GridElement[]
+            {
+                new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Sphere, color: GridElement.GridElementColor.White),
+                new GridElement(shape: GridElement.GridElementShape.Cylinder, color: GridElement.GridElementColor.White),
+            };
+
+            grid_TestHelper.GridElements[0] = gridElements[0];
+            grid_TestHelper.GridElements[1] = gridElements[1];
+            grid_TestHelper.GridElements[4] = gridElements[2];
+
+            GridCoordinates_X_Y_Set_On_Grid_Return_True_or_False(x: 0, y: 1, grid_TestHelper, expectedValue: false);
+        }
+    }
 }

@@ -43,6 +43,19 @@ public class GameLoopManager_TestHelper : GameLoopManager
         }
     }
 
+    public Grid Grid
+    {
+        get
+        {
+            return grid;
+        }
+
+        set
+        {
+            grid = value;
+        }
+    }
+
     public void IncrementTurnIndex_UnitTest()
     {
         IncrementTurnIndex();
@@ -51,5 +64,10 @@ public class GameLoopManager_TestHelper : GameLoopManager
     public Player GetPlayerPlayingThisTurn_UnitTest()
     {
         return GetPlayerPlayingThisTurn();
+    }
+
+    public bool CheckWinCondition_UnitTest(int x, int y)
+    {
+        return CheckWinCondition(x, y);
     }
 }

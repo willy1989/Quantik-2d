@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameLoopManager : MonoBehaviour
 {
-    private Grid grid = new Grid(width: 4, height: 4);
+    protected Grid grid;
 
     private GridElementPatternManager gridElementPatternManager = new GridElementPatternManager();
 
@@ -32,6 +32,7 @@ public class GameLoopManager : MonoBehaviour
         blackPlayer.OnPiecePlaced += IncrementTurnIndex;
 
         currentPlayer = GetPlayerPlayingThisTurn();
+        grid = new Grid(width: 4, height: 4);
     }
 
     private void Start()
@@ -76,7 +77,6 @@ public class GameLoopManager : MonoBehaviour
         }
     }
 
-    // To do: create unit tests
     protected Player GetPlayerPlayingThisTurn()
     {
         int turnNumber = turnIndex % 2;
@@ -87,14 +87,13 @@ public class GameLoopManager : MonoBehaviour
             return blackPlayer;
     }
 
-    // To do: create unit tests
     protected void IncrementTurnIndex()
     {
         turnIndex++;
     }
 
     // To do: create unit tests
-    private bool CheckWinCondition(int x, int y)
+    protected bool CheckWinCondition(int x, int y)
     {
         GridElement[] rowElements = grid.GetRowFromCoordinatesOfGridElement(x, y);
 
