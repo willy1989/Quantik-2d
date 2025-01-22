@@ -6,14 +6,11 @@ public class GridGraphicsManager : MonoBehaviour
 {
     [SerializeField] private GameObject gridBackgroundTilePrefab;
 
-    [SerializeField] private GameObject CubePiecePrefab;
-    [SerializeField] private GameObject PyramidPiecePrefab;
-    [SerializeField] private GameObject SpherePiecePrefab;
-    [SerializeField] private GameObject CylinderPiecePrefab;
+    [SerializeField] protected GridGraphicsObjectFactory gridGraphicsObjectFactory;
 
     private Grid grid;
 
-    private Dictionary<GridElement, GameObject> gridElementGridGraphicsDictionary = new Dictionary<GridElement, GameObject>();
+    protected Dictionary<GridElement, GameObject> gridElementGridGraphicsDictionary = new Dictionary<GridElement, GameObject>();
 
     public void SetUp(Grid grid)
     {
@@ -34,16 +31,21 @@ public class GridGraphicsManager : MonoBehaviour
         }
     }
 
-    private void AddPieceGraphics(GridElement gridElement, int x, int y)
+    protected void AddPieceGraphics(GridElement gridElement, int x, int y)
     {
         if (gridElement == null)
             return;
 
-        GameObject instantiatedPieceGraphics = CreatePieceGraphics(gridElement);
+        GameObject instantiatedPieceGraphics = gridGraphicsObjectFactory.CreatePieceGraphics(gridElement);
 
         gridElementGridGraphicsDictionary.Add(gridElement, instantiatedPieceGraphics);
 
-        instantiatedPieceGraphics.transform.position = new Vector3(x, y, -1);
+        PlacePieceGraphicsObject(instantiatedPieceGraphics, x, y);
+    }
+
+    protected void PlacePieceGraphicsObject(GameObject pieceGraphicsObject, int x, int y)
+    {
+        pieceGraphicsObject.transform.position = new Vector3(x, y, -1);
     }
 
     private void RemovePieceGraphics(GridElement gridElement)
@@ -53,31 +55,5 @@ public class GridGraphicsManager : MonoBehaviour
 
         GameObject pieceGraphics = gridElementGridGraphicsDictionary[gridElement];
         Destroy(pieceGraphics.gameObject);
-    }
-
-
-    private GameObject CreatePieceGraphics(GridElement gridElement)
-    {
-        if(gridElement.Shape == GridElement.GridElementShape.Cube)
-        {
-            return Instantiate(original: CubePiecePrefab, parent: this.transform);
-        }
-
-        else if (gridElement.Shape == GridElement.GridElementShape.Pyramid)
-        {
-            return Instantiate(original: PyramidPiecePrefab, parent: this.transform);
-        }
-
-        else if (gridElement.Shape == GridElement.GridElementShape.Sphere)
-        {
-            return Instantiate(original: SpherePiecePrefab, parent: this.transform);
-        }
-
-        else if (gridElement.Shape == GridElement.GridElementShape.Cylinder)
-        {
-            return Instantiate(original: CylinderPiecePrefab, parent: this.transform);
-        }
-
-        return null;
     }
 }

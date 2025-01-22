@@ -30,7 +30,7 @@ public class GameLoopManager : MonoBehaviour
         GridElement gridElement = new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White);
 
         grid.AddElement(gridElement, x: 0, y: 1);
-        grid.RemoveElement(x: 0, y: 1);
+        //grid.RemoveElement(x: 0, y: 1);
     }
 
     private void SetUp()
