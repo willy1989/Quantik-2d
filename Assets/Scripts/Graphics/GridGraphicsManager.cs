@@ -19,18 +19,6 @@ public class GridGraphicsManager : MonoBehaviour
         grid.OnGridElementRemoved += RemovePieceGraphics;
     }
 
-    public void GeneratebackgroundTiles()
-    {
-        for (int y = 0; y < grid.Height; y++)
-        {
-            for (int x = 0; x < grid.Width; x++)
-            {
-                GameObject gridBackgroundTileInstance = Instantiate(original: gridBackgroundTilePrefab, parent: this.transform);
-                gridBackgroundTileInstance.transform.position = new Vector3(x, y, 0);
-            }
-        }
-    }
-
     protected void AddPieceGraphics(GridElement gridElement, int x, int y)
     {
         if (gridElement == null)

@@ -6,6 +6,8 @@ public class GameLoopManager : MonoBehaviour
 {
     [SerializeField] private GridGraphicsManager gridGraphicsManager;
 
+    [SerializeField] private GridInteractionManager gridInteractionManager;
+
     protected Grid grid;
 
     private GridElementPatternManager gridElementPatternManager = new GridElementPatternManager();
@@ -23,6 +25,8 @@ public class GameLoopManager : MonoBehaviour
     private void Awake()
     {
         SetUp();
+
+        gridInteractionManager.SetPositionTilesCoordinates(grid);
     }
 
     private void Start()
@@ -45,7 +49,6 @@ public class GameLoopManager : MonoBehaviour
         grid = new Grid(width: 4, height: 4);
 
         gridGraphicsManager.SetUp(grid);
-        gridGraphicsManager.GeneratebackgroundTiles();
     }
 
     protected void PlayTurn(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)
