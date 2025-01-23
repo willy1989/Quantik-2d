@@ -35,7 +35,6 @@ public class Player
         }
     }
 
-    // To do: create unit test
     public void PlayPiece(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)
     {
         // Check whether the shape is still available

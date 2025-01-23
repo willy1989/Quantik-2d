@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SelectablePieceGraphics : MonoBehaviour
 {
-    [SerializeField] private SelectablePiece selectablePiece;
+    [SerializeField] private SelectablePieceInteraction selectablePiece;
 
     [SerializeField] private Image image;
 

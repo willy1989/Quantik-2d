@@ -6,7 +6,9 @@ public class GridGraphicsManager : MonoBehaviour
 {
     [SerializeField] private GameObject gridBackgroundTilePrefab;
 
-    [SerializeField] protected GridGraphicsObjectFactory gridGraphicsObjectFactory;
+    [SerializeField] private SpriteGridGraphicsFactory spriteGridGraphicsFactory;
+
+    [SerializeField] private GameObject pieceGraphicsPrefab;
 
     private Grid grid;
 
@@ -24,7 +26,9 @@ public class GridGraphicsManager : MonoBehaviour
         if (gridElement == null)
             return;
 
-        GameObject instantiatedPieceGraphics = gridGraphicsObjectFactory.CreatePieceGraphics(gridElement);
+        GameObject instantiatedPieceGraphics = Instantiate(pieceGraphicsPrefab);
+
+        instantiatedPieceGraphics.GetComponent<SpriteRenderer>().sprite = spriteGridGraphicsFactory.GetPieceSprite(gridElement);
 
         gridElementGridGraphicsDictionary.Add(gridElement, instantiatedPieceGraphics);
 

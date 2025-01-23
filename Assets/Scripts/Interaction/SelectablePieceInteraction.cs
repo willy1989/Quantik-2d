@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SelectablePiece : MonoBehaviour, IPointerClickHandler
+public class SelectablePieceInteraction : MonoBehaviour, IPointerClickHandler
 {
-    public Action<SelectablePiece> OnClicked;
+    public Action<SelectablePieceInteraction> OnClicked;
 
     private bool used = false;
 

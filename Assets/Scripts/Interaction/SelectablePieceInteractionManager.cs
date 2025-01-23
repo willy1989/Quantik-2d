@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectablePiecesManager : MonoBehaviour
+public class SelectablePieceInteractionManager : MonoBehaviour
 {
-    [SerializeField] private SelectablePiece[] selectablePieces;
+    [SerializeField] private SelectablePieceInteraction[] selectablePieces;
 
-    public SelectablePiece[] SelectablePieces => selectablePieces;
+    public SelectablePieceInteraction[] SelectablePieces => selectablePieces;
 
     public void SetupSelectablePieces(Player player)
     {

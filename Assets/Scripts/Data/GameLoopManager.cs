@@ -8,7 +8,7 @@ public class GameLoopManager : MonoBehaviour
 
     [SerializeField] private GridInteractionManager gridInteractionManager;
 
-    [SerializeField] private SelectablePiecesManager selectablePiecesManager;
+    [SerializeField] private SelectablePieceInteractionManager selectablePiecesManager;
 
     protected Grid grid;
 
@@ -21,19 +21,17 @@ public class GameLoopManager : MonoBehaviour
 
     protected int turnIndex = 0;
 
-    private bool whitePlayerFinishedTheirTurn = false;
-    private bool blackPlayerFinishedTheirTurn = false;
-
     private void Awake()
     {
         SetUp();
         
-
-        gridInteractionManager.Setup(grid);
+        gridInteractionManager.Setup(grid, whitePlayer);
     }
 
     private void SetUp()
     {
+        grid = new Grid(width: 4, height: 4);
+
         whitePlayer = new Player(GridElement.GridElementColor.White, grid);
         blackPlayer = new Player(GridElement.GridElementColor.Black, grid);
 
@@ -41,7 +39,7 @@ public class GameLoopManager : MonoBehaviour
         blackPlayer.OnPiecePlaced += IncrementTurnIndex;
 
         currentPlayer = GetPlayerPlayingThisTurn();
-        grid = new Grid(width: 4, height: 4);
+        
 
         gridGraphicsManager.SetUp(grid);
 

@@ -6,19 +6,6 @@ public class GridGraphicsManager_TestHelper : GridGraphicsManager
 {
     public Dictionary<GridElement, GameObject> GridElementGridGraphicsDictionary => gridElementGridGraphicsDictionary;
 
-    public GridGraphicsObjectFactory GridGraphicsObjectFactory
-    {
-        get
-        {
-            return gridGraphicsObjectFactory;
-        }
-
-        set
-        {
-            gridGraphicsObjectFactory = value;
-        }
-    }
-
     public void AddPieceGraphics_UnitTest(GridElement gridElement, int x, int y)
     {
         AddPieceGraphics(gridElement, x, y);

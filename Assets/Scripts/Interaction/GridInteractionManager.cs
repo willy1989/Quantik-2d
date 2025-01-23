@@ -6,15 +6,17 @@ public class GridInteractionManager : MonoBehaviour
 {
     [SerializeField] private PositionTile[] positionTiles;
 
-    [SerializeField] private SelectablePiecesManager selectablePiecesManager;
+    [SerializeField] private SelectablePieceInteractionManager selectablePiecesManager;
 
-    private SelectablePiece currentPiece;
+    private SelectablePieceInteraction currentPiece;
 
     private Grid grid;
 
+    private Player player;
+
     private void Awake()
     {
-        foreach (SelectablePiece piece in selectablePiecesManager.SelectablePieces)
+        foreach (SelectablePieceInteraction piece in selectablePiecesManager.SelectablePieces)
         {
             piece.OnClicked += SetCurrentPiece;
         }
@@ -35,16 +37,17 @@ public class GridInteractionManager : MonoBehaviour
 
         Vector2Int gridCoordinates = positionTile.GridCoordinate;
 
-        grid.AddElement(currentPiece.AssociatedGridElement, gridCoordinates.x, gridCoordinates.y);
+        player.PlayPiece(currentPiece.AssociatedGridElement.Shape, gridCoordinates.x, gridCoordinates.y);
 
         currentPiece.UsePiece(onOff:true);
 
         currentPiece = null;
     }
 
-    public void Setup(Grid grid)
+    public void Setup(Grid grid, Player player)
     {
         this.grid = grid;
+        this.player = player;
 
         int i = 0;
 
@@ -80,7 +83,7 @@ public class GridInteractionManager : MonoBehaviour
         return null;
     }
 
-    private void SetCurrentPiece(SelectablePiece targetPiece)
+    private void SetCurrentPiece(SelectablePieceInteraction targetPiece)
     {
         currentPiece = targetPiece;
         Debug.Log(currentPiece.name);
