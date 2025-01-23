@@ -6,28 +6,53 @@ public class GridInteractionManager : MonoBehaviour
 {
     [SerializeField] private PositionTile[] positionTiles;
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            PositionTile positionTile = GetPositionTileFromMousePosition();
+    [SerializeField] private SelectablePiecesManager selectablePiecesManager;
 
-            if (positionTile != null)
-            {
-                Debug.Log(positionTile.GridCoordinate);
-            }
+    private SelectablePiece currentPiece;
+
+    private Grid grid;
+
+    private void Awake()
+    {
+        foreach (SelectablePiece piece in selectablePiecesManager.SelectablePieces)
+        {
+            piece.OnClicked += SetCurrentPiece;
         }
     }
 
-    public void SetPositionTilesCoordinates(Grid grid)
+    private void Update()
     {
+        if (currentPiece == null)
+            return;
+
+        if (Input.GetMouseButtonDown(0) == false)
+            return;
+        
+        PositionTile positionTile = GetPositionTileFromMousePosition();
+
+        if(positionTile == null) 
+            return;
+
+        Vector2Int gridCoordinates = positionTile.GridCoordinate;
+
+        grid.AddElement(currentPiece.AssociatedGridElement, gridCoordinates.x, gridCoordinates.y);
+
+        currentPiece.UsePiece(onOff:true);
+
+        currentPiece = null;
+    }
+
+    public void Setup(Grid grid)
+    {
+        this.grid = grid;
+
         int i = 0;
 
         for(int y = 0; y < grid.Height; y++)
         {
             for (int x = 0; x < grid.Width; x++)
             {
-                positionTiles[i].Setup(new Vector2 (x, y));
+                positionTiles[i].Setup(new Vector2Int (x, y));
                 i++;
             }
         }
@@ -53,5 +78,11 @@ public class GridInteractionManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void SetCurrentPiece(SelectablePiece targetPiece)
+    {
+        currentPiece = targetPiece;
+        Debug.Log(currentPiece.name);
     }
 }

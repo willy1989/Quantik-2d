@@ -8,6 +8,8 @@ public class GameLoopManager : MonoBehaviour
 
     [SerializeField] private GridInteractionManager gridInteractionManager;
 
+    [SerializeField] private SelectablePiecesManager selectablePiecesManager;
+
     protected Grid grid;
 
     private GridElementPatternManager gridElementPatternManager = new GridElementPatternManager();
@@ -25,16 +27,9 @@ public class GameLoopManager : MonoBehaviour
     private void Awake()
     {
         SetUp();
+        
 
-        gridInteractionManager.SetPositionTilesCoordinates(grid);
-    }
-
-    private void Start()
-    {
-        GridElement gridElement = new GridElement(shape: GridElement.GridElementShape.Pyramid, color: GridElement.GridElementColor.White);
-
-        grid.AddElement(gridElement, x: 0, y: 1);
-        //grid.RemoveElement(x: 0, y: 1);
+        gridInteractionManager.Setup(grid);
     }
 
     private void SetUp()
@@ -49,6 +44,8 @@ public class GameLoopManager : MonoBehaviour
         grid = new Grid(width: 4, height: 4);
 
         gridGraphicsManager.SetUp(grid);
+
+        selectablePiecesManager.SetupSelectablePieces(whitePlayer);
     }
 
     protected void PlayTurn(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)

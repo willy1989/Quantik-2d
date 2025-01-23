@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PositionTile : MonoBehaviour
 {
-    public Vector2 GridCoordinate { get; private set; }
+    public Vector2Int GridCoordinate { get; private set; }
 
-    public void Setup(Vector2 gridCoordinate)
+    public void Setup(Vector2Int gridCoordinate)
     {
         GridCoordinate = gridCoordinate;
     }

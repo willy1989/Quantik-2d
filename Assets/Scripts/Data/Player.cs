@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Player
 {
-    protected List<GridElement.GridElementShape> startingShapes { get; private set; } = new List<GridElement.GridElementShape>();
+    public List<GridElement.GridElementShape> StartingShapes { get; private set; } = new List<GridElement.GridElementShape>();
 
-    protected GridElement.GridElementColor elementColor { get; private set; }
+    public GridElement.GridElementColor ElementColor { get; private set; }
 
     private Grid grid;
 
@@ -15,7 +15,7 @@ public class Player
 
     public Player(GridElement.GridElementColor elementColor, Grid grid)
     {
-        this.elementColor = elementColor;
+        this.ElementColor = elementColor;
 
         this.grid = grid;
 
@@ -30,8 +30,8 @@ public class Player
 
         foreach (GridElement.GridElementShape shape in shapes)
         {
-            startingShapes.Add(shape);
-            startingShapes.Add(shape);
+            StartingShapes.Add(shape);
+            StartingShapes.Add(shape);
         }
     }
 
@@ -52,7 +52,7 @@ public class Player
             return;
 
         // Temporarily add the element on the grid
-        GridElement gridElement = new GridElement(shape, elementColor);
+        GridElement gridElement = new GridElement(shape, ElementColor);
 
         grid.AddElement(gridElement,xGridCoordinate, yGridCoordinate);
 
@@ -73,7 +73,7 @@ public class Player
 
         else
         {
-            startingShapes.RemoveAt(startingShapes.IndexOf(shape));
+            StartingShapes.RemoveAt(StartingShapes.IndexOf(shape));
             OnPiecePlaced?.Invoke();
         }
     }
@@ -83,7 +83,7 @@ public class Player
     // To do: create unit test
     private bool IsShapeAvailable(GridElement.GridElementShape selectedShape)
     {
-        return startingShapes.Contains(selectedShape) == true;
+        return StartingShapes.Contains(selectedShape) == true;
     }
 
 
