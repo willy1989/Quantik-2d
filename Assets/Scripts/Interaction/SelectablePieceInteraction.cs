@@ -8,13 +8,13 @@ public class SelectablePieceInteraction : MonoBehaviour, IPointerClickHandler
 {
     public Action<SelectablePieceInteraction> OnClicked;
 
-    private bool used = false;
-
     public GridElement AssociatedGridElement { get; private set; }
 
     public Action<bool> OnUsed;
 
     public Action OnSetup;
+
+    private bool used = false;
 
     public void Setup(GridElement associatedGridElement)
     {

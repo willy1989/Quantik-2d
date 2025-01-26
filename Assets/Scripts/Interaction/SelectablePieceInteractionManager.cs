@@ -10,9 +10,9 @@ public class SelectablePieceInteractionManager : MonoBehaviour
 
     public void SetupSelectablePieces(Player player)
     {
-        for (int i = 0; i < player.StartingShapes.Count; i++)
+        for (int i = 0; i < player.StartingGridElements.Count; i++)
         {
-            selectablePieces[i].Setup(new GridElement(shape: player.StartingShapes[i], player.ElementColor));
+            selectablePieces[i].Setup(player.StartingGridElements[i]);
         }
     }
 }

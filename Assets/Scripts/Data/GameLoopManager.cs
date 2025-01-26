@@ -46,11 +46,11 @@ public class GameLoopManager : MonoBehaviour
         selectablePiecesManager.SetupSelectablePieces(whitePlayer);
     }
 
-    protected void PlayTurn(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)
+    protected void PlayTurn(GridElement gridElement, int xGridCoordinate, int yGridCoordinate)
     {
         Player cachedPlayer = currentPlayer;
 
-        currentPlayer.PlayPiece(shape, xGridCoordinate, yGridCoordinate);
+        //currentPlayer.PlayPiece(gridElement, shape: null, xGridCoordinate, yGridCoordinate);
 
         currentPlayer = GetPlayerPlayingThisTurn();
 

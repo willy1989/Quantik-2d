@@ -37,7 +37,8 @@ public class GridInteractionManager : MonoBehaviour
 
         Vector2Int gridCoordinates = positionTile.GridCoordinate;
 
-        player.PlayPiece(currentPiece.AssociatedGridElement.Shape, gridCoordinates.x, gridCoordinates.y);
+        player.PlayPiece(currentPiece.AssociatedGridElement, gridCoordinates.x, gridCoordinates.y);
+
 
         currentPiece.UsePiece(onOff:true);
 

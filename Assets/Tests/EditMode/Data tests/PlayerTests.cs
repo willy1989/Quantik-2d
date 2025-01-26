@@ -39,26 +39,26 @@ public class PlayerTests
         }
 
         [Test]
-        public void X_Different_Shapes_Creates_One_Pair_For_Each_Shape()
+        public void X_Different_GridElements_Creates_One_Pair_For_Each_Shape()
         {
             // Arrange
-
             Player_TestHelper player_TestHelper = new Player_TestHelper(GridElement.GridElementColor.White, new Grid(width: 4, height: 4));
 
+            // Act
+            var gridElements = player_TestHelper.StartingGridElements;
 
-            // Assert
-
-            var shapes = Enum.GetValues(typeof(GridElement.GridElementShape)).Cast<GridElement.GridElementShape>();
-
-            var shapeCounts = player_TestHelper.StartingShapes
-                .GroupBy(shape => shape)
+            // Group by Shape and Color and count occurrences
+            var gridElementsCount = gridElements
+                .GroupBy(gridElement => new { gridElement.Shape, gridElement.Color })
                 .ToDictionary(group => group.Key, group => group.Count());
 
-            foreach (var shape in shapes)
+            // Assert
+            foreach (var group in gridElementsCount)
             {
-                Assert.AreEqual(2, shapeCounts.GetValueOrDefault(shape, 0), $"Shape {shape} does not have exactly two occurrences.");
+                Assert.AreEqual(2, group.Value, $"GridElement with Shape={group.Key.Shape} and Color={group.Key.Color} does not have exactly two occurrences.");
             }
         }
+
     }
 
     public class PlayPiece
@@ -107,16 +107,19 @@ public class PlayerTests
 
             Player_TestHelper player_TestHelper = new Player_TestHelper(GridElement.GridElementColor.White, grid_TestHelper);
 
-            int startingShapesCount = player_TestHelper.StartingShapes.Count;
+            // Pyramid
+            GridElement gridElement = player_TestHelper.StartingGridElements[2];
+
+            int startingGridElementsCount = player_TestHelper.StartingGridElements.Count;
 
             // Act
 
-            player_TestHelper.PlayPiece(shapeToBePlayed, xGridCoordinate: x, yGridCoordinate: y);
+            player_TestHelper.PlayPiece(gridElement, xGridCoordinate: x, yGridCoordinate: y);
 
 
             // Assert
             Assert.IsNotNull(grid_TestHelper.GetElementFromGrid(x, y));
-            Assert.AreEqual(player_TestHelper.StartingShapes.Count, startingShapesCount - 1);
+            Assert.AreEqual(player_TestHelper.StartingGridElements.Count, startingGridElementsCount - 1);
         }
 
         [Test]
@@ -140,17 +143,18 @@ public class PlayerTests
             // Arrange
 
             Player_TestHelper player_TestHelper = new Player_TestHelper(playerColor, grid_TestHelper);
-            int startingShapesCount = player_TestHelper.StartingShapes.Count;
+            int startingGridElementsCount = player_TestHelper.StartingGridElements.Count;
 
+            GridElement gridElement = new GridElement(shapeToBePlayed, playerColor);
 
             // Act
 
-            player_TestHelper.PlayPiece(shapeToBePlayed, xGridCoordinate: x, yGridCoordinate: y);
+            player_TestHelper.PlayPiece(gridElement, xGridCoordinate: x, yGridCoordinate: y);
 
 
             // Assert
             Assert.IsNull(grid_TestHelper.GetElementFromGrid(x, y));
-            Assert.AreEqual(player_TestHelper.StartingShapes.Count, startingShapesCount);
+            Assert.AreEqual(player_TestHelper.StartingGridElements.Count, startingGridElementsCount);
         }
 
         [Test]

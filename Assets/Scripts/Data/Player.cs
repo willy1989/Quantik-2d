@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Player
 {
-    public List<GridElement.GridElementShape> StartingShapes { get; private set; } = new List<GridElement.GridElementShape>();
-
     public GridElement.GridElementColor ElementColor { get; private set; }
+
+    public List<GridElement> StartingGridElements { get; private set; } = new List<GridElement>();
 
     private Grid grid;
 
@@ -24,23 +24,21 @@ public class Player
 
     private void GenerateStartingGridElements()
     {
-        List<GridElement> elements = new List<GridElement>();
-
         Array shapes = Enum.GetValues(typeof(GridElement.GridElementShape));
 
         foreach (GridElement.GridElementShape shape in shapes)
         {
-            StartingShapes.Add(shape);
-            StartingShapes.Add(shape);
+            StartingGridElements.Add(new GridElement(shape, ElementColor));
+            StartingGridElements.Add(new GridElement(shape, ElementColor));
         }
     }
 
-    public void PlayPiece(GridElement.GridElementShape shape, int xGridCoordinate, int yGridCoordinate)
+    public void PlayPiece(GridElement passedGridElement, int xGridCoordinate, int yGridCoordinate)
     {
         // Check whether the shape is still available
-        bool isShapeAvailable = IsShapeAvailable(shape);
+        bool isGridElementAvailable = IsGridElementAvailable(passedGridElement);
 
-        if (isShapeAvailable == false)
+        if (isGridElementAvailable == false)
             return;
 
         // Check whether the grid cell is empty or not
@@ -51,9 +49,7 @@ public class Player
             return;
 
         // Temporarily add the element on the grid
-        GridElement gridElement = new GridElement(shape, ElementColor);
-
-        grid.AddElement(gridElement,xGridCoordinate, yGridCoordinate);
+        grid.AddElement(passedGridElement, xGridCoordinate, yGridCoordinate);
 
         // Check whether it is legal to add a piece there
 
@@ -72,18 +68,18 @@ public class Player
 
         else
         {
-            StartingShapes.RemoveAt(StartingShapes.IndexOf(shape));
-            OnPiecePlaced?.Invoke();
+            UseGridElement(passedGridElement);
         }
     }
 
-
-
-    // To do: create unit test
-    private bool IsShapeAvailable(GridElement.GridElementShape selectedShape)
+    private void UseGridElement(GridElement gridElement)
     {
-        return StartingShapes.Contains(selectedShape) == true;
+        StartingGridElements.RemoveAt(StartingGridElements.IndexOf(gridElement));
+        OnPiecePlaced?.Invoke();
     }
 
-
+    private bool IsGridElementAvailable(GridElement gridElement)
+    {
+        return StartingGridElements.Contains(gridElement);
+    }
 }
