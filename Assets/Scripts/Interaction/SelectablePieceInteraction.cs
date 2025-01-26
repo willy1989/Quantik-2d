@@ -8,13 +8,17 @@ public class SelectablePieceInteraction : MonoBehaviour, IPointerClickHandler
 {
     public Action<SelectablePieceInteraction> OnClicked;
 
+    public Action OnPointerUpEvent;
+
+    public Action OnClickedNoArgument;
+
     public GridElement AssociatedGridElement { get; private set; }
 
-    public Action<bool> OnUsed;
+    public Action OnPiecePlaced;
+
+    bool piecePlaced = false;
 
     public Action OnSetup;
-
-    private bool used = false;
 
     public void Setup(GridElement associatedGridElement)
     {
@@ -25,15 +29,16 @@ public class SelectablePieceInteraction : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (used == true)
+        if (piecePlaced == true)
             return;
 
         OnClicked?.Invoke(this);
+        OnClickedNoArgument?.Invoke();
     }
 
-    public void UsePiece(bool onOff)
+    public void UsePiece()
     {
-        used = onOff;
-        OnUsed?.Invoke(used);
+        piecePlaced = true;
+        OnPiecePlaced?.Invoke();
     }
 }

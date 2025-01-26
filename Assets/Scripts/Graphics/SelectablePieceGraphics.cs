@@ -21,7 +21,7 @@ public class SelectablePieceGraphics : MonoBehaviour
     private void Setup()
     {
         SetSprite(selectablePiece.AssociatedGridElement);
-        selectablePiece.OnUsed += ToggleGraphics;
+        selectablePiece.OnPiecePlaced += () => ToggleGraphics(false);
     }
 
     private void SetSprite(GridElement gridElement)
@@ -33,7 +33,7 @@ public class SelectablePieceGraphics : MonoBehaviour
 
     private void ToggleGraphics(bool onOff)
     {
-        if (onOff == true)
+        if (onOff == false)
             image.sprite = null;
         else
             image.sprite = sprite;

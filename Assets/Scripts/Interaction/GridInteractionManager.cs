@@ -40,7 +40,7 @@ public class GridInteractionManager : MonoBehaviour
         player.PlayPiece(currentPiece.AssociatedGridElement, gridCoordinates.x, gridCoordinates.y);
 
 
-        currentPiece.UsePiece(onOff:true);
+        currentPiece.UsePiece();
 
         currentPiece = null;
     }
