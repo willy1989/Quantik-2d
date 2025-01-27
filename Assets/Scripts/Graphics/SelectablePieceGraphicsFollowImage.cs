@@ -18,9 +18,9 @@ public class SelectablePieceGraphicsFollowImage : MonoBehaviour
     private void Awake()
     {
         followImage.enabled = false;
-        selectablePieceInteraction.OnClickedNoArgument += () => ToggleFollow(true);
-
-        selectablePieceInteraction.OnPiecePlaced += () => ToggleFollow(false);
+        selectablePieceInteraction.OnPiecePickedUp += ToggleFollowON;
+        selectablePieceInteraction.OnIsSelectableOn += ToggleFollowOFF;
+        selectablePieceInteraction.OnIsSelectableOff += ToggleFollowOFF;
     }
 
     private void Update()
@@ -35,8 +35,6 @@ public class SelectablePieceGraphicsFollowImage : MonoBehaviour
 
         Vector2 mouseCursorPosition = Input.mousePosition;
 
-        Debug.Log("Mouse cursor position: " + mouseCursorPosition);
-
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
@@ -44,8 +42,6 @@ public class SelectablePieceGraphicsFollowImage : MonoBehaviour
             null,
             out localPoint
         );
-
-        Debug.Log("Local point: " + localPoint);
 
         followImage.rectTransform.anchoredPosition = localPoint;
     }
@@ -59,5 +55,15 @@ public class SelectablePieceGraphicsFollowImage : MonoBehaviour
         {
             followImage.sprite = spriteGridGraphicsFactory.GetPieceSprite(selectablePieceInteraction.AssociatedGridElement);
         }
+    }
+
+    private void ToggleFollowON(SelectablePieceInteraction selectablePieceInteraction)
+    {
+        ToggleFollow(true);
+    }
+
+    private void ToggleFollowOFF()
+    {
+        ToggleFollow(false);
     }
 }

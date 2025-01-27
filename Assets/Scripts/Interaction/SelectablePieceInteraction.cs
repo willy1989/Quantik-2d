@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SelectablePieceInteraction : MonoBehaviour, IPointerClickHandler
+public class SelectablePieceInteraction : MonoBehaviour, IPointerDownHandler
 {
-    public Action<SelectablePieceInteraction> OnClicked;
-
-    public Action OnPointerUpEvent;
-
-    public Action OnClickedNoArgument;
-
     public GridElement AssociatedGridElement { get; private set; }
 
-    public Action OnPiecePlaced;
-
-    bool piecePlaced = false;
-
     public Action OnSetup;
+
+    public Action<SelectablePieceInteraction> OnPiecePickedUp;
+
+    public Action OnIsSelectableOn;
+
+    public Action OnIsSelectableOff;
+
+    bool isSelectable = true;
 
     public void Setup(GridElement associatedGridElement)
     {
@@ -27,18 +25,25 @@ public class SelectablePieceInteraction : MonoBehaviour, IPointerClickHandler
         OnSetup?.Invoke();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void SetIsSelectable(bool pieceIsSelectable)
     {
-        if (piecePlaced == true)
-            return;
+        this.isSelectable = pieceIsSelectable;
+        if(isSelectable == true)
+        {
+            OnIsSelectableOn?.Invoke();
+        }
 
-        OnClicked?.Invoke(this);
-        OnClickedNoArgument?.Invoke();
+        else
+        {
+            OnIsSelectableOff?.Invoke();
+        }
     }
 
-    public void UsePiece()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        piecePlaced = true;
-        OnPiecePlaced?.Invoke();
+        if(isSelectable == false)
+            return;
+
+        OnPiecePickedUp?.Invoke(this);
     }
 }

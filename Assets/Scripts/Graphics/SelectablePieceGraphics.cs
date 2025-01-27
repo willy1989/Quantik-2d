@@ -21,7 +21,8 @@ public class SelectablePieceGraphics : MonoBehaviour
     private void Setup()
     {
         SetSprite(selectablePiece.AssociatedGridElement);
-        selectablePiece.OnPiecePlaced += () => ToggleGraphics(false);
+        selectablePiece.OnPiecePickedUp += ToggleGraphicsOFF;
+        selectablePiece.OnIsSelectableOn += ToggleGraphicsON;
     }
 
     private void SetSprite(GridElement gridElement)
@@ -31,6 +32,16 @@ public class SelectablePieceGraphics : MonoBehaviour
         image.sprite = sprite;
     }
 
+    private void ToggleGraphicsOFF(SelectablePieceInteraction selectablePieceInteraction)
+    {
+        ToggleGraphics(false);
+    }
+
+    private void ToggleGraphicsON()
+    {
+        ToggleGraphics(true);
+    }
+
     private void ToggleGraphics(bool onOff)
     {
         if (onOff == false)
@@ -38,6 +49,4 @@ public class SelectablePieceGraphics : MonoBehaviour
         else
             image.sprite = sprite;
     }
-
-
 }

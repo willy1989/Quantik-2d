@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,43 +7,48 @@ public class GridInteractionManager : MonoBehaviour
 {
     [SerializeField] private PositionTile[] positionTiles;
 
-    [SerializeField] private SelectablePieceInteractionManager selectablePiecesManager;
-
-    private SelectablePieceInteraction currentPiece;
-
     private Grid grid;
 
     private Player player;
 
-    private void Awake()
+    private bool canRun = false;
+
+    public Action OnPiecePlaced;
+
+    public Action OnPieceDropped;
+
+    public void Toggle(bool onOff)
     {
-        foreach (SelectablePieceInteraction piece in selectablePiecesManager.SelectablePieces)
-        {
-            piece.OnClicked += SetCurrentPiece;
-        }
+        canRun = onOff;
     }
 
-    private void Update()
+    public void TryPlacePiece(GridElement gridElement)
     {
-        if (currentPiece == null)
+        if (canRun == false)
             return;
 
-        if (Input.GetMouseButtonDown(0) == false)
+        if (Input.GetMouseButtonUp(0) == false)
             return;
         
         PositionTile positionTile = GetPositionTileFromMousePosition();
 
-        if(positionTile == null) 
+        if (positionTile == null)
+        {
+            OnPieceDropped?.Invoke();
             return;
+        }
 
         Vector2Int gridCoordinates = positionTile.GridCoordinate;
 
-        player.PlayPiece(currentPiece.AssociatedGridElement, gridCoordinates.x, gridCoordinates.y);
+        if(grid.IsCellEmpty(gridCoordinates.x, gridCoordinates.y) == false)
+        {
+            OnPieceDropped?.Invoke();
+            return;
+        }
 
+        player.PlayPiece(gridElement, gridCoordinates.x, gridCoordinates.y);
 
-        currentPiece.UsePiece();
-
-        currentPiece = null;
+        OnPiecePlaced?.Invoke();
     }
 
     public void Setup(Grid grid, Player player)
@@ -82,11 +88,5 @@ public class GridInteractionManager : MonoBehaviour
         }
 
         return null;
-    }
-
-    private void SetCurrentPiece(SelectablePieceInteraction targetPiece)
-    {
-        currentPiece = targetPiece;
-        Debug.Log(currentPiece.name);
     }
 }

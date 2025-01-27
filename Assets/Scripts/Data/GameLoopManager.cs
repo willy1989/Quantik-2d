@@ -43,7 +43,7 @@ public class GameLoopManager : MonoBehaviour
 
         gridGraphicsManager.SetUp(grid);
 
-        selectablePiecesManager.SetupSelectablePieces(whitePlayer);
+        selectablePiecesManager.Setup(whitePlayer);
     }
 
     protected void PlayTurn(GridElement gridElement, int xGridCoordinate, int yGridCoordinate)

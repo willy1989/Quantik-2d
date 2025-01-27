@@ -122,6 +122,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &20997828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 20997830}
+  - component: {fileID: 20997829}
+  m_Layer: 0
+  m_Name: Master interaction manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &20997829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20997828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7b6c8fb5c6b1c40ba4e615c4f8003d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectablePieceInteractionManager: {fileID: 1725543465}
+  gridInteractionManager: {fileID: 1141543830}
+--- !u!4 &20997830
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20997828}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 119.53125, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &27122411
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,7 +690,7 @@ MonoBehaviour:
   followImage: {fileID: 1867337688}
   canvas: {fileID: 1176557495}
   selectablePieceInteraction: {fileID: 200713315}
-  spriteGridGraphicsFactory: {fileID: 0}
+  spriteGridGraphicsFactory: {fileID: 1401052643}
 --- !u!1 &203442465
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +811,7 @@ MonoBehaviour:
   followImage: {fileID: 1867337688}
   canvas: {fileID: 1176557495}
   selectablePieceInteraction: {fileID: 203442471}
-  spriteGridGraphicsFactory: {fileID: 0}
+  spriteGridGraphicsFactory: {fileID: 1401052643}
 --- !u!1 &223808861
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +932,7 @@ MonoBehaviour:
   followImage: {fileID: 1867337688}
   canvas: {fileID: 1176557495}
   selectablePieceInteraction: {fileID: 223808867}
-  spriteGridGraphicsFactory: {fileID: 0}
+  spriteGridGraphicsFactory: {fileID: 1401052643}
 --- !u!1 &238655087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,7 +1725,7 @@ MonoBehaviour:
   followImage: {fileID: 1867337688}
   canvas: {fileID: 1176557495}
   selectablePieceInteraction: {fileID: 532037461}
-  spriteGridGraphicsFactory: {fileID: 0}
+  spriteGridGraphicsFactory: {fileID: 1401052643}
 --- !u!1 &533975659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,8 +1737,8 @@ GameObject:
   - component: {fileID: 533975660}
   - component: {fileID: 533975664}
   - component: {fileID: 533975663}
-  - component: {fileID: 533975662}
   - component: {fileID: 533975661}
+  - component: {fileID: 533975662}
   - component: {fileID: 533975665}
   m_Layer: 5
   m_Name: Selectable piece
@@ -1800,7 +1846,7 @@ MonoBehaviour:
   followImage: {fileID: 1867337688}
   canvas: {fileID: 1176557495}
   selectablePieceInteraction: {fileID: 533975661}
-  spriteGridGraphicsFactory: {fileID: 0}
+  spriteGridGraphicsFactory: {fileID: 1401052643}
 --- !u!1 &593711092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,7 +2335,7 @@ MonoBehaviour:
   followImage: {fileID: 1867337688}
   canvas: {fileID: 1176557495}
   selectablePieceInteraction: {fileID: 630500913}
-  spriteGridGraphicsFactory: {fileID: 0}
+  spriteGridGraphicsFactory: {fileID: 1401052643}
 --- !u!1 &806962521
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,7 +2456,7 @@ MonoBehaviour:
   followImage: {fileID: 1867337688}
   canvas: {fileID: 1176557495}
   selectablePieceInteraction: {fileID: 806962527}
-  spriteGridGraphicsFactory: {fileID: 0}
+  spriteGridGraphicsFactory: {fileID: 1401052643}
 --- !u!1 &914345095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2718,7 +2764,7 @@ GameObject:
   - component: {fileID: 1141543829}
   - component: {fileID: 1141543830}
   m_Layer: 0
-  m_Name: Interaction manager
+  m_Name: Grid interaction manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2768,7 +2814,6 @@ MonoBehaviour:
   - {fileID: 2103411180}
   - {fileID: 439563455}
   - {fileID: 1195769964}
-  selectablePiecesManager: {fileID: 1725543465}
 --- !u!1 &1176557492
 GameObject:
   m_ObjectHideFlags: 0
@@ -2780,7 +2825,7 @@ GameObject:
   - component: {fileID: 1176557496}
   - component: {fileID: 1176557495}
   - component: {fileID: 1176557494}
-  - component: {fileID: 1176557493}
+  - component: {fileID: 1176557497}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -2788,23 +2833,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1176557493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176557492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &1176557494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2865,6 +2893,7 @@ RectTransform:
   m_Children:
   - {fileID: 1725543462}
   - {fileID: 1867337687}
+  - {fileID: 2055846229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2872,6 +2901,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1176557497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176557492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1195769961
 GameObject:
   m_ObjectHideFlags: 0
@@ -3387,7 +3433,7 @@ GameObject:
   - component: {fileID: 1725543463}
   - component: {fileID: 1725543465}
   m_Layer: 5
-  m_Name: Selectable pieces
+  m_Name: Selectable pieces interaction manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4260,6 +4306,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2055846228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2055846229}
+  - component: {fileID: 2055846230}
+  m_Layer: 5
+  m_Name: UI raycast utils
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2055846229
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055846228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1176557496}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2055846230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055846228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31386b07ff9a32143aa733335116d914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Raycaster: {fileID: 1176557497}
+  m_EventSystem: {fileID: 55523834}
 --- !u!1 &2103411177
 GameObject:
   m_ObjectHideFlags: 0
@@ -4411,6 +4507,7 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1440923764}
   - {fileID: 1092499415}
+  - {fileID: 20997830}
   - {fileID: 1141543829}
   - {fileID: 27122413}
   - {fileID: 1176557496}
