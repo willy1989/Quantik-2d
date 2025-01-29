@@ -114,7 +114,7 @@ public class PlayerTests
 
             // Act
 
-            player_TestHelper.PlayPiece(gridElement, xGridCoordinate: x, yGridCoordinate: y);
+            player_TestHelper.TryPlayPiece(gridElement, xGridCoordinate: x, yGridCoordinate: y);
 
 
             // Assert
@@ -149,7 +149,7 @@ public class PlayerTests
 
             // Act
 
-            player_TestHelper.PlayPiece(gridElement, xGridCoordinate: x, yGridCoordinate: y);
+            player_TestHelper.TryPlayPiece(gridElement, xGridCoordinate: x, yGridCoordinate: y);
 
 
             // Assert

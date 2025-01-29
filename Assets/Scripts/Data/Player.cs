@@ -33,20 +33,20 @@ public class Player
         }
     }
 
-    public void PlayPiece(GridElement passedGridElement, int xGridCoordinate, int yGridCoordinate)
+    public bool TryPlayPiece(GridElement passedGridElement, int xGridCoordinate, int yGridCoordinate)
     {
         // Check whether the shape is still available
         bool isGridElementAvailable = IsGridElementAvailable(passedGridElement);
 
         if (isGridElementAvailable == false)
-            return;
+            return false;
 
         // Check whether the grid cell is empty or not
 
         bool cellIsEmpty = grid.IsCellEmpty(xGridCoordinate, yGridCoordinate);
 
         if (cellIsEmpty == false)
-            return;
+            return false;
 
         // Temporarily add the element on the grid
         grid.AddElement(passedGridElement, xGridCoordinate, yGridCoordinate);
@@ -59,17 +59,16 @@ public class Player
 
         bool cornerIsLegal = grid.IsCornerLegal(xGridCoordinate, yGridCoordinate);
 
-        // Remove piece if the move was not legal
+        // Remove piece if the move was illegal
 
         if(rowIsLegal == false || columnIsLegal == false || cornerIsLegal == false)
         {
             grid.RemoveElement(xGridCoordinate, yGridCoordinate);
+            return false;
         }
 
-        else
-        {
-            UseGridElement(passedGridElement);
-        }
+        UseGridElement(passedGridElement);
+        return true;
     }
 
     private void UseGridElement(GridElement gridElement)

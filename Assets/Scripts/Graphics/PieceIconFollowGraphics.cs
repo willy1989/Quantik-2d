@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectablePieceGraphicsFollowImage : MonoBehaviour
+public class PieceIconFollowGraphics : MonoBehaviour
 {
+    [SerializeField] private PieceIcon pieceIcon;
+
     [SerializeField] private Image followImage;
 
     [SerializeField] private Canvas canvas;
-
-    [SerializeField] private SelectablePieceInteraction selectablePieceInteraction;
 
     [SerializeField] private SpriteGridGraphicsFactory spriteGridGraphicsFactory;
 
@@ -17,11 +17,12 @@ public class SelectablePieceGraphicsFollowImage : MonoBehaviour
 
     private void Awake()
     {
-        followImage.enabled = false;
-        selectablePieceInteraction.OnPiecePickedUp += ToggleFollowON;
-        selectablePieceInteraction.OnIsSelectableOn += ToggleFollowOFF;
-        selectablePieceInteraction.OnIsSelectableOff += ToggleFollowOFF;
+        pieceIcon.OnSetup += SetPieceIcon;
+        pieceIcon.OnPickedUp += () => ToggleFollow(true);
+        pieceIcon.OnPlaced += () => ToggleFollow(false);
+        pieceIcon.OnDropped += () => ToggleFollow(false);
     }
+
 
     private void Update()
     {
@@ -46,24 +47,14 @@ public class SelectablePieceGraphicsFollowImage : MonoBehaviour
         followImage.rectTransform.anchoredPosition = localPoint;
     }
 
+    private void SetPieceIcon()
+    {
+        followImage.sprite = spriteGridGraphicsFactory.GetPieceSprite(pieceIcon.GetAssociatedGridElement());
+    }
+
     private void ToggleFollow(bool onOff)
     {
         canFollow = onOff;
         followImage.enabled = onOff;
-
-        if(onOff == true)
-        {
-            followImage.sprite = spriteGridGraphicsFactory.GetPieceSprite(selectablePieceInteraction.AssociatedGridElement);
-        }
-    }
-
-    private void ToggleFollowON(SelectablePieceInteraction selectablePieceInteraction)
-    {
-        ToggleFollow(true);
-    }
-
-    private void ToggleFollowOFF()
-    {
-        ToggleFollow(false);
     }
 }

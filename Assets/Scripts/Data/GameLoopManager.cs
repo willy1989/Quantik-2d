@@ -8,7 +8,7 @@ public class GameLoopManager : MonoBehaviour
 
     [SerializeField] private GridInteractionManager gridInteractionManager;
 
-    [SerializeField] private SelectablePieceInteractionManager selectablePiecesManager;
+    [SerializeField] private PieceIconManager pieceIconManager;
 
     protected Grid grid;
 
@@ -39,11 +39,10 @@ public class GameLoopManager : MonoBehaviour
         blackPlayer.OnPiecePlaced += IncrementTurnIndex;
 
         currentPlayer = GetPlayerPlayingThisTurn();
-        
 
         gridGraphicsManager.SetUp(grid);
 
-        selectablePiecesManager.Setup(whitePlayer);
+        pieceIconManager.Setup(whitePlayer);
     }
 
     protected void PlayTurn(GridElement gridElement, int xGridCoordinate, int yGridCoordinate)

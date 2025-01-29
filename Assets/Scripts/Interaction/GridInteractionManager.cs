@@ -11,44 +11,17 @@ public class GridInteractionManager : MonoBehaviour
 
     private Player player;
 
-    private bool canRun = false;
-
-    public Action OnPiecePlaced;
-
-    public Action OnPieceDropped;
-
-    public void Toggle(bool onOff)
+    public bool TryPlacePiece(GridElement gridElement, PositionTile positionTile)
     {
-        canRun = onOff;
-    }
-
-    public void TryPlacePiece(GridElement gridElement)
-    {
-        if (canRun == false)
-            return;
-
-        if (Input.GetMouseButtonUp(0) == false)
-            return;
-        
-        PositionTile positionTile = GetPositionTileFromMousePosition();
-
-        if (positionTile == null)
-        {
-            OnPieceDropped?.Invoke();
-            return;
-        }
-
         Vector2Int gridCoordinates = positionTile.GridCoordinate;
 
         if(grid.IsCellEmpty(gridCoordinates.x, gridCoordinates.y) == false)
         {
-            OnPieceDropped?.Invoke();
-            return;
+            return false;
         }
 
-        player.PlayPiece(gridElement, gridCoordinates.x, gridCoordinates.y);
+        return player.TryPlayPiece(gridElement, gridCoordinates.x, gridCoordinates.y);
 
-        OnPiecePlaced?.Invoke();
     }
 
     public void Setup(Grid grid, Player player)
@@ -66,27 +39,5 @@ public class GridInteractionManager : MonoBehaviour
                 i++;
             }
         }
-    }
-
-    private PositionTile GetPositionTileFromMousePosition()
-    {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-
-        if (hit.collider != null)
-        {
-            GameObject clickedObject = hit.collider.gameObject;
-
-            PositionTile positionTile = clickedObject.GetComponent<PositionTile>();
-
-            if (positionTile != null)
-            {
-                return positionTile;
-            }
-        }
-
-        return null;
     }
 }

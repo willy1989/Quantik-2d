@@ -4,31 +4,71 @@ using UnityEngine;
 
 public class MasterInteractionManager : MonoBehaviour
 {
-    [SerializeField] private SelectablePieceInteractionManager selectablePieceInteractionManager;
-
     [SerializeField] private GridInteractionManager gridInteractionManager;
 
-    private void Awake()
-    {
-        gridInteractionManager.OnPiecePlaced += selectablePieceInteractionManager.SetCurrentPieceInteractionUnselectable;
+    [SerializeField] private PieceInteractionRaycaster pieceInteractionRaycaster;
 
-        gridInteractionManager.OnPieceDropped += selectablePieceInteractionManager.ResetCurrentPieceInteraction;
-    }
+    private PieceIcon currentPieceIcon;
 
 
     private void Update()
     {
-        // Select phase
-        if(selectablePieceInteractionManager.CurrentPieceInteraction == null)
-        {
-            gridInteractionManager.Toggle(false);
-        }
+        InterractWithPieceIconContainer();
+        InterractWithPositionTile();
+    }
 
-        // Place phase
-        else
+    private void InterractWithPieceIconContainer()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            gridInteractionManager.Toggle(true);
-            gridInteractionManager.TryPlacePiece(selectablePieceInteractionManager.CurrentPieceInteraction.AssociatedGridElement);
+            PieceIconContainer pieceIconContainer = pieceInteractionRaycaster.GetPieceIconContainer();
+
+            if (pieceIconContainer != null)
+            {
+                PieceIcon pieceIcon = pieceIconContainer.GetPieceIcon();
+
+                if(pieceIcon != null)
+                {
+                    currentPieceIcon = pieceIconContainer.GetPieceIcon();
+                    currentPieceIcon.Drop(false);
+                    currentPieceIcon.PickUp(true);
+                }
+            }
+        }
+    }
+
+    private void InterractWithPositionTile()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            PositionTile positionTile = pieceInteractionRaycaster.GetPositionTileFromMousePosition();
+
+            if (positionTile == null)
+            {
+                if(currentPieceIcon != null)
+                {
+                    currentPieceIcon.PickUp(false);
+                    currentPieceIcon.Drop(true);
+                    currentPieceIcon = null;
+                }
+            }
+
+            else
+            {
+                if(currentPieceIcon != null)
+                {
+                    bool pieceWasPlaced = gridInteractionManager.TryPlacePiece(currentPieceIcon.GetAssociatedGridElement(), positionTile);
+
+                    if(pieceWasPlaced == true)
+                    {
+                        currentPieceIcon.Drop(false);
+                        currentPieceIcon.PickUp(false);
+                        currentPieceIcon.Place(true);
+
+                        currentPieceIcon = null;
+                    }
+                }
+            }
         }
     }
 }
