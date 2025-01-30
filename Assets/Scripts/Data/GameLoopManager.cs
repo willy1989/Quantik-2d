@@ -6,9 +6,7 @@ public class GameLoopManager : MonoBehaviour
 {
     [SerializeField] private GridGraphicsManager gridGraphicsManager;
 
-    [SerializeField] private GridInteractionManager gridInteractionManager;
-
-    [SerializeField] private PieceIconManager pieceIconManager;
+    [SerializeField] private MasterInteractionManager masterInteractionManager;
 
     protected Grid grid;
 
@@ -23,9 +21,7 @@ public class GameLoopManager : MonoBehaviour
 
     private void Awake()
     {
-        SetUp();
-        
-        gridInteractionManager.Setup(grid, whitePlayer);
+        SetUp(); 
     }
 
     private void SetUp()
@@ -42,14 +38,12 @@ public class GameLoopManager : MonoBehaviour
 
         gridGraphicsManager.SetUp(grid);
 
-        pieceIconManager.Setup(whitePlayer);
+        masterInteractionManager.Setup(grid, whitePlayer);
     }
 
     protected void PlayTurn(GridElement gridElement, int xGridCoordinate, int yGridCoordinate)
     {
         Player cachedPlayer = currentPlayer;
-
-        //currentPlayer.PlayPiece(gridElement, shape: null, xGridCoordinate, yGridCoordinate);
 
         currentPlayer = GetPlayerPlayingThisTurn();
 

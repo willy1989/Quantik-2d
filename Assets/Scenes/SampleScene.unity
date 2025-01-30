@@ -151,8 +151,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7b6c8fb5c6b1c40ba4e615c4f8003d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridInteractionManager: {fileID: 1141543830}
+  whitePlayerPieceIconManager: {fileID: 1141543830}
+  blackPlayerPieceIconManager: {fileID: 0}
   pieceInteractionRaycaster: {fileID: 534460386}
+  positionTiles:
+  - {fileID: 601502437}
+  - {fileID: 1804194019}
+  - {fileID: 1293046599}
+  - {fileID: 1958198988}
+  - {fileID: 914345098}
+  - {fileID: 54837044}
+  - {fileID: 593711095}
+  - {fileID: 238655090}
+  - {fileID: 178775334}
+  - {fileID: 1763259341}
+  - {fileID: 1749592038}
+  - {fileID: 1801320675}
+  - {fileID: 477095503}
+  - {fileID: 2103411180}
+  - {fileID: 439563455}
+  - {fileID: 1195769964}
 --- !u!4 &20997830
 Transform:
   m_ObjectHideFlags: 0
@@ -3137,7 +3155,7 @@ GameObject:
   - component: {fileID: 1141543829}
   - component: {fileID: 1141543830}
   m_Layer: 0
-  m_Name: Grid interaction manager
+  m_Name: White player grid interaction manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3170,23 +3188,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b829c16d6799915499f47baea8ff0a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionTiles:
-  - {fileID: 601502437}
-  - {fileID: 1804194019}
-  - {fileID: 1293046599}
-  - {fileID: 1958198988}
-  - {fileID: 914345098}
-  - {fileID: 54837044}
-  - {fileID: 593711095}
-  - {fileID: 238655090}
-  - {fileID: 178775334}
-  - {fileID: 1763259341}
-  - {fileID: 1749592038}
-  - {fileID: 1801320675}
-  - {fileID: 477095503}
-  - {fileID: 2103411180}
-  - {fileID: 439563455}
-  - {fileID: 1195769964}
+  pieceIcons:
+  - {fileID: 1319096706}
+  - {fileID: 533975667}
+  - {fileID: 630500916}
+  - {fileID: 200713318}
+  - {fileID: 806962530}
+  - {fileID: 532037464}
+  - {fileID: 223808870}
+  - {fileID: 203442474}
 --- !u!1 &1176557492
 GameObject:
   m_ObjectHideFlags: 0
@@ -4023,8 +4033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridGraphicsManager: {fileID: 27122412}
-  gridInteractionManager: {fileID: 1141543830}
-  pieceIconManager: {fileID: 1725543465}
+  masterInteractionManager: {fileID: 20997829}
 --- !u!4 &1440923764
 Transform:
   m_ObjectHideFlags: 0
@@ -4051,9 +4060,8 @@ GameObject:
   - component: {fileID: 1725543462}
   - component: {fileID: 1725543464}
   - component: {fileID: 1725543463}
-  - component: {fileID: 1725543465}
   m_Layer: 5
-  m_Name: Piece icon container manager
+  m_Name: Piece icons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4115,27 +4123,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725543461}
   m_CullTransparentMesh: 1
---- !u!114 &1725543465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1725543461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 182f7adeb17334042ad695ba69e50e6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pieceIcons:
-  - {fileID: 1319096706}
-  - {fileID: 533975667}
-  - {fileID: 630500916}
-  - {fileID: 200713318}
-  - {fileID: 806962530}
-  - {fileID: 532037464}
-  - {fileID: 223808870}
-  - {fileID: 203442474}
 --- !u!1 &1749592035
 GameObject:
   m_ObjectHideFlags: 0

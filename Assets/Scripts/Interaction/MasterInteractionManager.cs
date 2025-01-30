@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class MasterInteractionManager : MonoBehaviour
 {
-    [SerializeField] private GridInteractionManager gridInteractionManager;
+    [SerializeField] private PieceIconManager whitePlayerPieceIconManager;
+    [SerializeField] private PieceIconManager blackPlayerPieceIconManager;
 
     [SerializeField] private PieceInteractionRaycaster pieceInteractionRaycaster;
 
-    private PieceIcon currentPieceIcon;
+    [SerializeField] private PositionTile[] positionTiles;
 
+    private PieceIcon currentPieceIcon;
 
     private void Update()
     {
@@ -17,53 +19,86 @@ public class MasterInteractionManager : MonoBehaviour
         InterractWithPositionTile();
     }
 
-    private void InterractWithPieceIconContainer()
+    public void Setup(Grid grid, Player whitePlayer)
     {
-        if (Input.GetMouseButtonDown(0))
+        whitePlayerPieceIconManager.Setup(grid,whitePlayer);
+
+        int i = 0;
+
+        for (int y = 0; y < grid.Height; y++)
         {
-            PieceIconContainer pieceIconContainer = pieceInteractionRaycaster.GetPieceIconContainer();
-
-            if (pieceIconContainer != null)
+            for (int x = 0; x < grid.Width; x++)
             {
-                PieceIcon pieceIcon = pieceIconContainer.GetPieceIcon();
-
-                if(pieceIcon != null)
-                {
-                    currentPieceIcon = pieceIconContainer.GetPieceIcon();
-                    currentPieceIcon.PickUp();
-                }
+                positionTiles[i].Setup(new Vector2Int(x, y));
+                i++;
             }
         }
     }
 
+    private void InterractWithPieceIconContainer()
+    {
+        if (Input.GetMouseButtonDown(0) == false)
+            return;
+
+        TryGetPieceIconFromIconContainer(out PieceIcon pieceIcon);
+
+        if (pieceIcon != null)
+            PlacePieceIcon(pieceIcon);
+    }
+
+    private bool TryGetPieceIconFromIconContainer(out PieceIcon pieceIcon)
+    {
+        pieceIcon = null;
+
+        PieceIconContainer pieceIconContainer = pieceInteractionRaycaster.GetPieceIconContainer();
+        if (pieceIconContainer == null)
+            return false;
+
+        pieceIcon = pieceIconContainer.GetPieceIcon();
+        return pieceIcon != null;
+    }
+
+    private void PlacePieceIcon(PieceIcon pieceIcon)
+    {
+        currentPieceIcon = pieceIcon;
+        currentPieceIcon.PickUp();
+    }
+
     private void InterractWithPositionTile()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) == false)
+            return;
+
+        if (currentPieceIcon == null)
+            return;
+
+        PositionTile positionTile = pieceInteractionRaycaster.GetPositionTileFromMousePosition();
+
+        if (positionTile == null)
         {
-            PositionTile positionTile = pieceInteractionRaycaster.GetPositionTileFromMousePosition();
+            DropIcon();
+        }
 
-            if (positionTile == null)
-            {
-                if(currentPieceIcon != null)
-                {
-                    currentPieceIcon.Drop();
-                    currentPieceIcon = null;
-                }
-            }
+        else
+        {
+            TryPlaceIcon(positionTile.GridCoordinate);
+        }
+    }
 
-            else
-            {
-                if(currentPieceIcon != null)
-                {
-                    bool pieceWasPlaced = gridInteractionManager.TryPlacePiece(currentPieceIcon.GetAssociatedGridElement(), positionTile);
+    private void DropIcon()
+    {
+        currentPieceIcon.Drop();
+        currentPieceIcon = null;
+    }
 
-                    if(pieceWasPlaced == true)
-                    {
-                        currentPieceIcon.Place();
-                        currentPieceIcon = null;
-                    }
-                }
-            }
+    private void TryPlaceIcon(Vector2Int gridCoordinates)
+    {
+        bool pieceWasPlaced = whitePlayerPieceIconManager.TryPlacePiece(currentPieceIcon.GetAssociatedGridElement(), gridCoordinates);
+
+        if (pieceWasPlaced == true)
+        {
+            currentPieceIcon.Place();
+            currentPieceIcon = null;
         }
     }
 }
