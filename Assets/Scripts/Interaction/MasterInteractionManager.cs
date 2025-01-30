@@ -30,8 +30,7 @@ public class MasterInteractionManager : MonoBehaviour
                 if(pieceIcon != null)
                 {
                     currentPieceIcon = pieceIconContainer.GetPieceIcon();
-                    currentPieceIcon.Drop(false);
-                    currentPieceIcon.PickUp(true);
+                    currentPieceIcon.PickUp();
                 }
             }
         }
@@ -47,8 +46,7 @@ public class MasterInteractionManager : MonoBehaviour
             {
                 if(currentPieceIcon != null)
                 {
-                    currentPieceIcon.PickUp(false);
-                    currentPieceIcon.Drop(true);
+                    currentPieceIcon.Drop();
                     currentPieceIcon = null;
                 }
             }
@@ -61,10 +59,7 @@ public class MasterInteractionManager : MonoBehaviour
 
                     if(pieceWasPlaced == true)
                     {
-                        currentPieceIcon.Drop(false);
-                        currentPieceIcon.PickUp(false);
-                        currentPieceIcon.Place(true);
-
+                        currentPieceIcon.Place();
                         currentPieceIcon = null;
                     }
                 }

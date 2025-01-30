@@ -13,9 +13,6 @@ public class PieceIcon : MonoBehaviour
 
     public Action OnSetup;
 
-    public bool IsPickedUp { get; private set; } = false;
-    public bool IsDropped { get; private set; } = false;
-
     public bool IsPlaced { get; private set; } = false;
 
     public void Setup(GridElement associatedGridElement)
@@ -29,35 +26,19 @@ public class PieceIcon : MonoBehaviour
         return associatedGridElement;
     }
 
-    public void PickUp(bool value)
+    public void PickUp()
     {
-        IsPickedUp = value;
-
-        if(IsPickedUp == true)
-        {
-            OnPickedUp?.Invoke();
-        }
+        OnPickedUp?.Invoke();
     }
 
-    public void Drop(bool value)
+    public void Drop()
     {
-        IsDropped = value;
-
-        if (IsDropped == true)
-        {
-            OnDropped?.Invoke();
-        }
-        
+        OnDropped?.Invoke();
     }
 
-    public void Place(bool value)
+    public void Place()
     {
-        IsPlaced = value;
-
-        if (IsPlaced == true)
-        {
-            OnPlaced?.Invoke();
-        }
-        
+        IsPlaced = true;
+        OnPlaced?.Invoke();
     }
 }
