@@ -21,6 +21,14 @@ public class PieceIcon : MonoBehaviour
         OnSetup?.Invoke();
     }
 
+    public void ResetEvents()
+    {
+        OnPickedUp = null;
+        OnDropped = null;
+        OnPlaced = null;
+        OnSetup = null;
+    }
+
     public GridElement GetAssociatedGridElement()
     {
         return associatedGridElement;

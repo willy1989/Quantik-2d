@@ -9,6 +9,8 @@ public class GridElement
 
     public GridElementColor Color { get; private set; }
 
+    private string key;
+
     public GridElement()
     {
 

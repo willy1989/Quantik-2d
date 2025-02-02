@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MasterInteractionManager : MonoBehaviour
 {
@@ -11,7 +12,18 @@ public class MasterInteractionManager : MonoBehaviour
 
     [SerializeField] private PositionTile[] positionTiles;
 
+    [SerializeField] private PieceIconSwitcher[] pieceIconSwitchers;
+
     private PieceIcon currentPieceIcon;
+
+    private PieceIconManager currentPieceIconManager;
+
+    [SerializeField] Button switchPlayerButton_DEBUG;
+
+    private void Awake()
+    {
+        switchPlayerButton_DEBUG.onClick.AddListener(SwitchToBlackPlayer_DEBUG);
+    }
 
     private void Update()
     {
@@ -19,9 +31,12 @@ public class MasterInteractionManager : MonoBehaviour
         InterractWithPositionTile();
     }
 
-    public void Setup(Grid grid, Player whitePlayer)
+    public void Setup(Grid grid, Player whitePlayer, Player blackPlayer)
     {
-        whitePlayerPieceIconManager.Setup(grid,whitePlayer);
+        whitePlayerPieceIconManager.Setup(grid, whitePlayer);
+        blackPlayerPieceIconManager.Setup(grid, blackPlayer);
+
+        currentPieceIconManager = whitePlayerPieceIconManager;
 
         int i = 0;
 
@@ -33,6 +48,21 @@ public class MasterInteractionManager : MonoBehaviour
                 i++;
             }
         }
+
+        foreach (PieceIconSwitcher switcher in pieceIconSwitchers)
+        {
+            switcher.SwitchPieceIcon(GridElement.GridElementColor.White);
+        }
+    }
+
+    private void SwitchToBlackPlayer_DEBUG()
+    {
+        foreach (PieceIconSwitcher switcher in pieceIconSwitchers)
+        {
+            switcher.SwitchPieceIcon(GridElement.GridElementColor.Black);
+            currentPieceIconManager = blackPlayerPieceIconManager;
+            currentPieceIcon = null;
+        }
     }
 
     private void InterractWithPieceIconContainer()
@@ -43,7 +73,7 @@ public class MasterInteractionManager : MonoBehaviour
         TryGetPieceIconFromIconContainer(out PieceIcon pieceIcon);
 
         if (pieceIcon != null)
-            PlacePieceIcon(pieceIcon);
+            PickupPieceIcon(pieceIcon);
     }
 
     private bool TryGetPieceIconFromIconContainer(out PieceIcon pieceIcon)
@@ -58,7 +88,7 @@ public class MasterInteractionManager : MonoBehaviour
         return pieceIcon != null;
     }
 
-    private void PlacePieceIcon(PieceIcon pieceIcon)
+    private void PickupPieceIcon(PieceIcon pieceIcon)
     {
         currentPieceIcon = pieceIcon;
         currentPieceIcon.PickUp();
@@ -93,12 +123,17 @@ public class MasterInteractionManager : MonoBehaviour
 
     private void TryPlaceIcon(Vector2Int gridCoordinates)
     {
-        bool pieceWasPlaced = whitePlayerPieceIconManager.TryPlacePiece(currentPieceIcon.GetAssociatedGridElement(), gridCoordinates);
+        bool pieceWasPlaced = currentPieceIconManager.TryPlacePiece(currentPieceIcon.GetAssociatedGridElement(), gridCoordinates);
 
         if (pieceWasPlaced == true)
         {
             currentPieceIcon.Place();
             currentPieceIcon = null;
+        }
+
+        else
+        {
+            DropIcon();
         }
     }
 }

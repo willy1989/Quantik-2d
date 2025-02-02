@@ -38,7 +38,7 @@ public class GameLoopManager : MonoBehaviour
 
         gridGraphicsManager.SetUp(grid);
 
-        masterInteractionManager.Setup(grid, whitePlayer);
+        masterInteractionManager.Setup(grid, whitePlayer, blackPlayer);
     }
 
     protected void PlayTurn(GridElement gridElement, int xGridCoordinate, int yGridCoordinate)

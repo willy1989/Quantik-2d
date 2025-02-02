@@ -45,7 +45,10 @@ public class GridGraphicsManager : MonoBehaviour
         if (gridElement == null)
             return;
 
-        GameObject pieceGraphics = gridElementGridGraphicsDictionary[gridElement];
-        Destroy(pieceGraphics.gameObject);
+        if (gridElementGridGraphicsDictionary.TryGetValue(gridElement, out GameObject pieceGraphics))
+        {
+            Destroy(pieceGraphics.gameObject);
+            gridElementGridGraphicsDictionary.Remove(gridElement);
+        }
     }
 }

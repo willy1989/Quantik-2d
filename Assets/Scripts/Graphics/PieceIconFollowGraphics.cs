@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class PieceIconFollowGraphics : MonoBehaviour
 {
-    [SerializeField] private PieceIcon pieceIcon;
-
     [SerializeField] private Image followImage;
 
     [SerializeField] private Canvas canvas;
@@ -15,12 +13,12 @@ public class PieceIconFollowGraphics : MonoBehaviour
 
     private bool canFollow = false;
 
-    private void Awake()
+    public void SetPieceIcon(PieceIcon pieceIcon)
     {
-        pieceIcon.OnSetup += SetPieceIcon;
         pieceIcon.OnPickedUp += () => ToggleFollow(true);
         pieceIcon.OnPlaced += () => ToggleFollow(false);
         pieceIcon.OnDropped += () => ToggleFollow(false);
+        followImage.sprite = spriteGridGraphicsFactory.GetPieceSprite(pieceIcon.GetAssociatedGridElement());
     }
 
 
@@ -45,11 +43,6 @@ public class PieceIconFollowGraphics : MonoBehaviour
         );
 
         followImage.rectTransform.anchoredPosition = localPoint;
-    }
-
-    private void SetPieceIcon()
-    {
-        followImage.sprite = spriteGridGraphicsFactory.GetPieceSprite(pieceIcon.GetAssociatedGridElement());
     }
 
     private void ToggleFollow(bool onOff)

@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 public class PieceIconStaticGraphics : MonoBehaviour
 {
-    [SerializeField] private PieceIcon pieceIcon;
-
     [SerializeField] private Image image;
 
     [SerializeField] private SpriteGridGraphicsFactory spriteGridGraphicsFactory;
 
     private Sprite sprite;
 
-    private void Awake()
+    public void SetPieceIcon(PieceIcon pieceIcon)
     {
-        pieceIcon.OnSetup += () => SetSprite(pieceIcon.GetAssociatedGridElement());
+        if(pieceIcon.IsPlaced == false)
+            SetSprite(pieceIcon.GetAssociatedGridElement());
+
         pieceIcon.OnPickedUp += () => ToggleGraphics(false);
         pieceIcon.OnPlaced += () => ToggleGraphics(false);
         pieceIcon.OnDropped += () => ToggleGraphics(true);
