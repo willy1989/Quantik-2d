@@ -9,30 +9,22 @@ public class PieceIconStaticGraphics : MonoBehaviour
 
     [SerializeField] private SpriteGridGraphicsFactory spriteGridGraphicsFactory;
 
-    private Sprite sprite;
-
     public void SetPieceIcon(PieceIcon pieceIcon)
     {
-        if(pieceIcon.IsPlaced == false)
-            SetSprite(pieceIcon.GetAssociatedGridElement());
+        ToggleGraphics(false);
+        if (pieceIcon.IsPlaced == true)
+            return;
+
+        ToggleGraphics(true);
+        image.sprite = spriteGridGraphicsFactory.GetPieceSprite(pieceIcon.GetAssociatedGridElement());
 
         pieceIcon.OnPickedUp += () => ToggleGraphics(false);
         pieceIcon.OnPlaced += () => ToggleGraphics(false);
         pieceIcon.OnDropped += () => ToggleGraphics(true);
     }
 
-    private void SetSprite(GridElement gridElement)
-    {
-        sprite = spriteGridGraphicsFactory.GetPieceSprite(gridElement);
-
-        image.sprite = sprite;
-    }
-
     private void ToggleGraphics(bool onOff)
     {
-        if (onOff == false)
-            image.sprite = null;
-        else
-            image.sprite = sprite;
+        image.enabled = onOff;
     }
 }

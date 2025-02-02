@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,10 +21,7 @@ public class MasterInteractionManager : MonoBehaviour
 
     [SerializeField] Button switchPlayerButton_DEBUG;
 
-    private void Awake()
-    {
-        switchPlayerButton_DEBUG.onClick.AddListener(SwitchToBlackPlayer_DEBUG);
-    }
+    public Action<GridElement, Vector2Int> OnPlaceGridElement;
 
     private void Update()
     {
@@ -35,8 +33,6 @@ public class MasterInteractionManager : MonoBehaviour
     {
         whitePlayerPieceIconManager.Setup(grid, whitePlayer);
         blackPlayerPieceIconManager.Setup(grid, blackPlayer);
-
-        currentPieceIconManager = whitePlayerPieceIconManager;
 
         int i = 0;
 
@@ -55,13 +51,24 @@ public class MasterInteractionManager : MonoBehaviour
         }
     }
 
-    private void SwitchToBlackPlayer_DEBUG()
+    public void SwitchPlayer(Player player)
     {
+        if(player.ElementColor == GridElement.GridElementColor.Black)
+            currentPieceIconManager = blackPlayerPieceIconManager;
+
+        else if(player.ElementColor == GridElement.GridElementColor.White)
+            currentPieceIconManager = whitePlayerPieceIconManager;
+
+        else
+        {
+            throw new ArgumentException("A player should be either black or white.");
+        }
+
+        currentPieceIcon = null;
+
         foreach (PieceIconSwitcher switcher in pieceIconSwitchers)
         {
-            switcher.SwitchPieceIcon(GridElement.GridElementColor.Black);
-            currentPieceIconManager = blackPlayerPieceIconManager;
-            currentPieceIcon = null;
+            switcher.SwitchPieceIcon(player.ElementColor);
         }
     }
 
@@ -128,6 +135,8 @@ public class MasterInteractionManager : MonoBehaviour
         if (pieceWasPlaced == true)
         {
             currentPieceIcon.Place();
+
+            OnPlaceGridElement?.Invoke(currentPieceIcon.GetAssociatedGridElement(), gridCoordinates);
             currentPieceIcon = null;
         }
 

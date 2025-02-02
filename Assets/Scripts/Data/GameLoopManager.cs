@@ -31,25 +31,30 @@ public class GameLoopManager : MonoBehaviour
         whitePlayer = new Player(GridElement.GridElementColor.White, grid);
         blackPlayer = new Player(GridElement.GridElementColor.Black, grid);
 
-        whitePlayer.OnPiecePlaced += IncrementTurnIndex;
-        blackPlayer.OnPiecePlaced += IncrementTurnIndex;
-
         currentPlayer = GetPlayerPlayingThisTurn();
 
         gridGraphicsManager.SetUp(grid);
 
         masterInteractionManager.Setup(grid, whitePlayer, blackPlayer);
+        masterInteractionManager.OnPlaceGridElement += HandleGridElementPlaced;
+
+        masterInteractionManager.SwitchPlayer(currentPlayer);
     }
 
-    protected void PlayTurn(GridElement gridElement, int xGridCoordinate, int yGridCoordinate)
+    private void HandleGridElementPlaced(GridElement gridElement, Vector2Int gridCoordinates)
     {
-        Player cachedPlayer = currentPlayer;
+        bool currentPlayerWins = CheckWinCondition(gridCoordinates.x, gridCoordinates.y);
 
-        currentPlayer = GetPlayerPlayingThisTurn();
-
-        if (cachedPlayer != currentPlayer)
+        if(currentPlayerWins == true)
         {
-            CheckWinCondition(xGridCoordinate, yGridCoordinate);
+            Debug.Log(currentPlayer.ElementColor.ToString() + " player wins");
+        }
+
+        else
+        {
+            IncrementTurnIndex();
+            currentPlayer = GetPlayerPlayingThisTurn();
+            masterInteractionManager.SwitchPlayer(currentPlayer);
         }
     }
 
