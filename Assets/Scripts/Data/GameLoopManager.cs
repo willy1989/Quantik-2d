@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class GameLoopManager : MonoBehaviour
     private Player currentPlayer;
 
     protected int turnIndex = 0;
+
+    public static Action OnResetGame;
 
     private void Awake()
     {
@@ -41,6 +44,22 @@ public class GameLoopManager : MonoBehaviour
         masterInteractionManager.SwitchPlayer(currentPlayer);
     }
 
+    private void ResetGame()
+    {
+        ResetState();
+        OnResetGame?.Invoke();
+
+        currentPlayer = GetPlayerPlayingThisTurn();
+
+        masterInteractionManager.SwitchPlayer(currentPlayer);
+    }
+
+    public void ResetState()
+    {
+        currentPlayer = null;
+        turnIndex = 0;
+    }
+
     private void HandleGridElementPlaced(GridElement gridElement, Vector2Int gridCoordinates)
     {
         bool currentPlayerWins = CheckWinCondition(gridCoordinates.x, gridCoordinates.y);
@@ -48,6 +67,7 @@ public class GameLoopManager : MonoBehaviour
         if(currentPlayerWins == true)
         {
             Debug.Log(currentPlayer.ElementColor.ToString() + " player wins");
+            ResetGame();
         }
 
         else

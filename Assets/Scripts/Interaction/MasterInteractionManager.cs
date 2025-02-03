@@ -19,9 +19,12 @@ public class MasterInteractionManager : MonoBehaviour
 
     private PieceIconManager currentPieceIconManager;
 
-    [SerializeField] Button switchPlayerButton_DEBUG;
-
     public Action<GridElement, Vector2Int> OnPlaceGridElement;
+
+    private void Awake()
+    {
+        GameLoopManager.OnResetGame += ResetState;
+    }
 
     private void Update()
     {
@@ -49,6 +52,12 @@ public class MasterInteractionManager : MonoBehaviour
         {
             switcher.SwitchPieceIcon(GridElement.GridElementColor.White);
         }
+    }
+
+    public void ResetState()
+    {
+        currentPieceIcon = null;
+        currentPieceIconManager = null;
     }
 
     public void SwitchPlayer(Player player)

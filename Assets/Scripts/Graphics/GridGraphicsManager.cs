@@ -14,6 +14,13 @@ public class GridGraphicsManager : MonoBehaviour
 
     protected Dictionary<GridElement, GameObject> gridElementGridGraphicsDictionary = new Dictionary<GridElement, GameObject>();
 
+    private List<GameObject> instantiatedPieceGraphics = new List<GameObject>();
+
+    private void Awake()
+    {
+        GameLoopManager.OnResetGame += ResetState;
+    }
+
     public void SetUp(Grid grid)
     {
         this.grid = grid;
@@ -21,18 +28,32 @@ public class GridGraphicsManager : MonoBehaviour
         grid.OnGridElementRemoved += RemovePieceGraphics;
     }
 
+    private void ResetState()
+    {
+        foreach(GameObject pieceGraphic in instantiatedPieceGraphics)
+        {
+            Destroy(pieceGraphic.gameObject);
+        }
+
+        instantiatedPieceGraphics.Clear();
+
+        gridElementGridGraphicsDictionary.Clear();
+    }
+
     protected void AddPieceGraphics(GridElement gridElement, int x, int y)
     {
         if (gridElement == null)
             return;
 
-        GameObject instantiatedPieceGraphics = Instantiate(pieceGraphicsPrefab);
+        GameObject instantiatedPieceGraphic = Instantiate(pieceGraphicsPrefab);
 
-        instantiatedPieceGraphics.GetComponent<SpriteRenderer>().sprite = spriteGridGraphicsFactory.GetPieceSprite(gridElement);
+        instantiatedPieceGraphic.GetComponent<SpriteRenderer>().sprite = spriteGridGraphicsFactory.GetPieceSprite(gridElement);
 
-        gridElementGridGraphicsDictionary.Add(gridElement, instantiatedPieceGraphics);
+        instantiatedPieceGraphics.Add(instantiatedPieceGraphic);
 
-        PlacePieceGraphicsObject(instantiatedPieceGraphics, x, y);
+        gridElementGridGraphicsDictionary.Add(gridElement, instantiatedPieceGraphic);
+
+        PlacePieceGraphicsObject(instantiatedPieceGraphic, x, y);
     }
 
     protected void PlacePieceGraphicsObject(GameObject pieceGraphicsObject, int x, int y)

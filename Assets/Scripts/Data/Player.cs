@@ -9,6 +9,8 @@ public class Player
 
     public List<GridElement> StartingGridElements { get; private set; } = new List<GridElement>();
 
+    private List<GridElement> placedElements = new List<GridElement>();
+
     private Grid grid;
 
     public Action OnPiecePlaced;
@@ -20,6 +22,14 @@ public class Player
         this.grid = grid;
 
         GenerateStartingGridElements();
+
+        GameLoopManager.OnResetGame += ResetState;
+    }
+
+    private void ResetState()
+    {
+        StartingGridElements.AddRange(placedElements);
+        placedElements.Clear();
     }
 
     private void GenerateStartingGridElements()
@@ -74,6 +84,8 @@ public class Player
     private void UseGridElement(GridElement gridElement)
     {
         StartingGridElements.RemoveAt(StartingGridElements.IndexOf(gridElement));
+
+        placedElements.Add(gridElement);
         OnPiecePlaced?.Invoke();
     }
 

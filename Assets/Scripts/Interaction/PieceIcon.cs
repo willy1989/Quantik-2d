@@ -15,10 +15,21 @@ public class PieceIcon : MonoBehaviour
 
     public bool IsPlaced { get; private set; } = false;
 
+    private void Awake()
+    {
+        GameLoopManager.OnResetGame += ResetState;
+    }
+
     public void Setup(GridElement associatedGridElement)
     {
         this.associatedGridElement = associatedGridElement;
         OnSetup?.Invoke();
+    }
+
+    public void ResetState()
+    {
+        IsPlaced = false;
+        ResetEvents();
     }
 
     public void ResetEvents()

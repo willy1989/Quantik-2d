@@ -180,7 +180,6 @@ MonoBehaviour:
   - {fileID: 1715520016}
   - {fileID: 719398598}
   - {fileID: 1324157642}
-  switchPlayerButton_DEBUG: {fileID: 1199900454}
 --- !u!4 &20997830
 Transform:
   m_ObjectHideFlags: 0
@@ -4749,6 +4748,10 @@ MonoBehaviour:
   whitePyramidPieceSprite: {fileID: 21300000, guid: 62048662f0c78cb4cbe32ce3009e7e39, type: 3}
   whiteSpherePieceSprite: {fileID: 21300000, guid: 419ddbd5ca5fd4340965a693ade8b2cf, type: 3}
   whiteCylinderPieceSprite: {fileID: 21300000, guid: 36fb7362a334fc54ba3f7044064ab9e7, type: 3}
+  blackCubePieceSprite: {fileID: 21300000, guid: 05c793aac513be1418e676d945b54f92, type: 3}
+  blackPyramidPieceSprite: {fileID: 21300000, guid: ece488af27e61c049b312e0aa3dab23b, type: 3}
+  blackSpherePieceSprite: {fileID: 21300000, guid: feb8cdd4d4f8a0840a2c0a899ddffe33, type: 3}
+  blackCylinderPieceSprite: {fileID: 21300000, guid: d0b65eaa0ded35042986632a8263be9c, type: 3}
 --- !u!1 &1431950240
 GameObject:
   m_ObjectHideFlags: 0

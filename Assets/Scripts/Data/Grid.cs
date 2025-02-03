@@ -38,6 +38,12 @@ public class Grid
         this.Height = height;
 
         gridElements = new GridElement[width * height];
+        GameLoopManager.OnResetGame += ResetState;
+    }
+
+    private void ResetState()
+    {
+        gridElements = new GridElement[Width * Height];
     }
 
     public void PopulateGrid(GridElement[] newElements)
