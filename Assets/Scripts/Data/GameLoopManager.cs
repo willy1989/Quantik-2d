@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,8 +40,7 @@ public class GameLoopManager : MonoBehaviour
 
     public Action<Player> OnCurrentPlayerChanged;
 
-    public Action OnGameOver;
-    public Action<Player> OnGameOverWiner;
+    public Action<GameOverEventData> OnGameOver;
 
     private void Awake()
     {
@@ -85,8 +85,7 @@ public class GameLoopManager : MonoBehaviour
         {
             Debug.Log(currentPlayer.ElementColor.ToString() + " player wins");
             masterInteractionManager.SetCanInterract(false);
-            OnGameOver?.Invoke();
-            OnGameOverWiner?.Invoke(currentPlayer);
+            OnGameOver?.Invoke(new GameOverEventData(currentPlayer));
         }
 
         else
