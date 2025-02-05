@@ -39,6 +39,9 @@ public class GameLoopManager : MonoBehaviour
 
     public Action<Player> OnCurrentPlayerChanged;
 
+    public Action OnGameOver;
+    public Action<Player> OnGameOverWiner;
+
     private void Awake()
     {
         SetUp();
@@ -81,7 +84,9 @@ public class GameLoopManager : MonoBehaviour
         if(currentPlayerWins == true)
         {
             Debug.Log(currentPlayer.ElementColor.ToString() + " player wins");
-            ResetGame();
+            masterInteractionManager.SetCanInterract(false);
+            OnGameOver?.Invoke();
+            OnGameOverWiner?.Invoke(currentPlayer);
         }
 
         else
