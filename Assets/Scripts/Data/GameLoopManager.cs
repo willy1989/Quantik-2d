@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLoopManager : MonoBehaviour
 {
@@ -16,15 +17,31 @@ public class GameLoopManager : MonoBehaviour
     protected Player whitePlayer;
     protected Player blackPlayer;
 
-    private Player currentPlayer;
+    private Player _currentPlayer;
+
+    private Player currentPlayer
+    {
+        get
+        {
+            return _currentPlayer;
+        }
+
+        set
+        {
+            _currentPlayer = value;
+            OnCurrentPlayerChanged?.Invoke(_currentPlayer);
+        }
+    }
 
     protected int turnIndex = 0;
 
     public static Action OnResetGame;
 
+    public Action<Player> OnCurrentPlayerChanged;
+
     private void Awake()
     {
-        SetUp(); 
+        SetUp();
     }
 
     private void SetUp()
@@ -34,17 +51,13 @@ public class GameLoopManager : MonoBehaviour
         whitePlayer = new Player(GridElement.GridElementColor.White, grid);
         blackPlayer = new Player(GridElement.GridElementColor.Black, grid);
 
-        currentPlayer = GetPlayerPlayingThisTurn();
-
         gridGraphicsManager.SetUp(grid);
 
         masterInteractionManager.Setup(grid, whitePlayer, blackPlayer);
         masterInteractionManager.OnPlaceGridElement += HandleGridElementPlaced;
-
-        masterInteractionManager.SwitchPlayer(currentPlayer);
     }
 
-    private void ResetGame()
+    public void ResetGame()
     {
         ResetState();
         OnResetGame?.Invoke();
@@ -52,6 +65,7 @@ public class GameLoopManager : MonoBehaviour
         currentPlayer = GetPlayerPlayingThisTurn();
 
         masterInteractionManager.SwitchPlayer(currentPlayer);
+        masterInteractionManager.SetCanInterract(true);
     }
 
     public void ResetState()

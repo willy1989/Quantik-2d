@@ -21,6 +21,8 @@ public class MasterInteractionManager : MonoBehaviour
 
     public Action<GridElement, Vector2Int> OnPlaceGridElement;
 
+    private bool canInterract = false;
+
     private void Awake()
     {
         GameLoopManager.OnResetGame += ResetState;
@@ -28,6 +30,9 @@ public class MasterInteractionManager : MonoBehaviour
 
     private void Update()
     {
+        if (canInterract == false)
+            return;
+
         InterractWithPieceIconContainer();
         InterractWithPositionTile();
     }
@@ -58,6 +63,11 @@ public class MasterInteractionManager : MonoBehaviour
     {
         currentPieceIcon = null;
         currentPieceIconManager = null;
+    }
+
+    public void SetCanInterract(bool onOff)
+    {
+        canInterract = onOff;
     }
 
     public void SwitchPlayer(Player player)
